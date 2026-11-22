@@ -25,10 +25,30 @@ Explorar → encontrar recursos o pistas → decidir si evitar o enfrentar una a
 
 Mundo abierto, historia completa, varios tipos de enemigos, fabricación y sistemas complejos de inventario.
 
+## Prototipo actual
+
+La primera escena contiene una habitación de clínica gris y oscura, una cámara en primera persona y una linterna. Se puede caminar por el espacio y volver a encender la linterna con F.
+
+### Controles
+
+- WASD: moverse.
+- Mouse: mirar.
+- F: encender o apagar la linterna.
+- Escape: soltar el mouse; clic para volver a capturarlo.
+
+### Abrir y ejecutar
+
+1. Instalar Godot 4.x.
+2. En Godot, importar el archivo `project.godot` de esta carpeta.
+3. Presionar F6 o F5 para ejecutar la escena.
+
+También se puede editar el código en VS Code; Godot se usa para ejecutar y visualizar el juego.
+
 ## Decisiones provisionales
 
 - Plataforma inicial: PC.
-- Motor sugerido: Godot, por su accesibilidad para un proyecto pequeño.
+- Motor: Godot 4, renderer Compatibility (OpenGL 3.3 en escritorio).
 - Prioridad de diseño: exploración tensa, recursos escasos y encuentros peligrosos.
+- Estética: baja resolución y geometría sencilla; la API gráfica moderna no determina el estilo visual.
 
-Estas decisiones se pueden ajustar cuando definamos experiencia previa y preferencias.
+DirectX 7 no se usará como renderer inicial: es una API antigua y haría más difícil abrir, probar y distribuir el prototipo en equipos actuales. Compatibility apunta a hardware modesto mediante una API gráfica con soporte vigente. Los requisitos reales se comprobarán cuando tengamos una compilación para probar en distintos equipos.
