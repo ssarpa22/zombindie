@@ -27,7 +27,7 @@ Mundo abierto, historia completa, varios tipos de enemigos, fabricación y siste
 
 ## Prototipo actual
 
-La primera escena contiene recepción, un pasillo y salas laterales con puertas interactivas, mosaicos de piso, detalles de deterioro y ventanas con luz lunar. Afuera hay un claro con bosque, niebla y luna llena. La iluminación interior parpadea de forma irregular y el techo se solapa con las paredes para cerrar las rendijas.
+La primera escena contiene recepción, un pasillo y salas laterales con puertas interactivas, mosaicos de piso, texturas pixeladas y detalles de deterioro. Las ventanas dejan entrar luz lunar direccional y sombras sobre el piso; afuera hay un claro con bosque, niebla y luna llena. La iluminación interior parpadea de forma irregular, el movimiento de cámara tiene una oscilación corporal sutil y el techo se solapa con las paredes para cerrar las rendijas.
 
 ### Controles
 

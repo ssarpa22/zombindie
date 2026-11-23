@@ -100,9 +100,10 @@ func _build_lighting() -> void:
 	moon_light.name = "Moonlight"
 	moon_light.rotation_degrees = Vector3(-28, -20, 0)
 	moon_light.light_color = Color(0.43, 0.51, 0.68)
-	moon_light.light_energy = 0.16
-	moon_light.shadow_enabled = false
-	moon_light.light_cull_mask = 2
+	moon_light.light_energy = 0.34
+	moon_light.shadow_enabled = true
+	moon_light.directional_shadow_max_distance = 60.0
+	moon_light.light_cull_mask = 3
 	add_child(moon_light)
 	_add_fixture_light(Vector3(0, 2.92, 1), Color(0.68, 0.72, 0.61), 0.62, 7.5, true)
 	_add_fixture_light(Vector3(-5.1, 2.88, 6.7), Color(0.62, 0.68, 0.58), 0.43, 5.0, false)
@@ -154,6 +155,7 @@ func _build_tile_floor() -> void:
 	var tiles = MultiMeshInstance3D.new()
 	tiles.name = "LowResolutionFloorTiles"
 	tiles.multimesh = multi_mesh
+	tiles.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var tile_material = StandardMaterial3D.new()
 	tile_material.vertex_color_use_as_albedo = true
 	tile_material.roughness = 1.0
@@ -238,8 +240,12 @@ func _add_door(door_name: String, hinge_position: Vector3, yaw: float) -> void:
 
 func _build_detail_pass() -> void:
 	# Scuffed wall protection, exposed pipework and small traces of the evacuation.
-	_add_box("LeftWallWainscot", Vector3(-7.78, 0.55, 0), Vector3(0.08, 1.1, 23.8), Color(0.16, 0.25, 0.22))
-	_add_box("RightWallWainscot", Vector3(7.78, 0.55, 0), Vector3(0.08, 1.1, 23.8), Color(0.16, 0.25, 0.22))
+	_add_box("LeftWallWainscotFront", Vector3(-7.78, 0.42, 9.15), Vector3(0.08, 0.84, 5.5), Color(0.16, 0.25, 0.22))
+	_add_box("LeftWallWainscotMiddle", Vector3(-7.78, 0.42, 0), Vector3(0.08, 0.84, 7.1), Color(0.16, 0.25, 0.22))
+	_add_box("LeftWallWainscotRear", Vector3(-7.78, 0.42, -9.15), Vector3(0.08, 0.84, 5.5), Color(0.16, 0.25, 0.22))
+	_add_box("RightWallWainscotFront", Vector3(7.78, 0.42, 9.15), Vector3(0.08, 0.84, 5.5), Color(0.16, 0.25, 0.22))
+	_add_box("RightWallWainscotMiddle", Vector3(7.78, 0.42, 0), Vector3(0.08, 0.84, 7.1), Color(0.16, 0.25, 0.22))
+	_add_box("RightWallWainscotRear", Vector3(7.78, 0.42, -9.15), Vector3(0.08, 0.84, 5.5), Color(0.16, 0.25, 0.22))
 	_add_box("LeftPipe", Vector3(-7.62, 2.55, -2), Vector3(0.12, 0.12, 15), Color(0.24, 0.29, 0.27))
 	_add_box("RightPipe", Vector3(7.62, 2.55, -5), Vector3(0.12, 0.12, 11), Color(0.26, 0.28, 0.25))
 	_add_box("CeilingCable", Vector3(0.75, 2.98, -3), Vector3(0.07, 0.16, 3.4), Color(0.035, 0.04, 0.04))
@@ -350,6 +356,7 @@ func _add_glass(glass_name: String, glass_position: Vector3, glass_size: Vector3
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.roughness = 0.35
 	pane.material_override = material
+	pane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(pane)
 
 func _add_tree(tree_position: Vector3, tree_height: float, tree_scale: float) -> void:
@@ -429,6 +436,11 @@ func _add_box(box_name: String, box_position: Vector3, box_size: Vector3, color:
 	if is_equal_approx(box_size.y, 3.0):
 		box_position.y = 1.55
 		box_size.y = 3.2
+	if box_size.y > 3.0 and minf(box_size.x, box_size.z) < 0.6:
+		if box_size.x > box_size.z:
+			box_size.x += 0.04
+		else:
+			box_size.z += 0.04
 	var body = StaticBody3D.new()
 	body.name = box_name
 	body.position = box_position
@@ -439,7 +451,7 @@ func _add_box(box_name: String, box_position: Vector3, box_size: Vector3, color:
 	var material = StandardMaterial3D.new()
 	material.albedo_color = color
 	material.roughness = 1.0
-	if _grain_texture != null and (box_name.contains("Wall") or box_name.contains("Floor") or box_name.contains("Door") or box_name.contains("Pipe")):
+	if _grain_texture != null and (box_size.y > 2.0 or box_name.contains("Wall") or box_name.contains("Section") or box_name.contains("Divider") or box_name.contains("Floor") or box_name.contains("Ceiling") or box_name.contains("Door") or box_name.contains("Pipe")):
 		material.albedo_texture = _grain_texture
 		material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 		material.uv1_scale = Vector3(2.0, 2.0, 1.0)
