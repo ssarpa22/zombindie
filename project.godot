@@ -2,7 +2,10 @@ config_version=5
 
 [application]
 config/name="Zombindie"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://MainMenu.tscn"
+
+[autoload]
+GameSettings="*res://systems/game_settings.gd"
 
 [display]
 window/size/viewport_width=640

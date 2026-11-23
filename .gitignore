@@ -1,0 +1,7 @@
+# Godot editor/import cache
+.godot/
+.import/
+
+# Local export configuration
+export.cfg
+export_presets.cfg
