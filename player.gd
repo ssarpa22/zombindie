@@ -23,6 +23,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F:
 		flashlight.visible = not flashlight.visible
+	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
+		_try_interact()
+
+func _try_interact() -> void:
+	var camera: Camera3D = $CameraPivot/Camera3D
+	var ray_origin = camera.global_position
+	var ray_end = ray_origin - camera.global_transform.basis.z * 2.8
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.exclude = [get_rid()]
+	var hit = get_world_3d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty():
+		var target = hit.get("collider")
+		if target != null and target.has_method("interact"):
+			target.call("interact")
 
 func _physics_process(_delta: float) -> void:
 	var input_vector := Vector2.ZERO
@@ -37,4 +51,3 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity.y = 0
 	move_and_slide()
-

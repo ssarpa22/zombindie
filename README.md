@@ -27,14 +27,17 @@ Mundo abierto, historia completa, varios tipos de enemigos, fabricación y siste
 
 ## Prototipo actual
 
-La primera escena contiene una habitación de clínica gris y oscura, una cámara en primera persona y una linterna. Se puede caminar por el espacio y volver a encender la linterna con F.
+La primera escena contiene recepción, un pasillo y salas laterales con puertas interactivas, mosaicos de piso, detalles de deterioro y ventanas con luz lunar. Afuera hay un claro con bosque, niebla y luna llena. La iluminación interior parpadea de forma irregular y el techo se solapa con las paredes para cerrar las rendijas.
 
 ### Controles
 
 - WASD: moverse.
 - Mouse: mirar.
+- E: abrir o cerrar puertas que tengas enfrente.
 - F: encender o apagar la linterna.
 - Escape: soltar el mouse; clic para volver a capturarlo.
+
+El escenario usa modelos geométricos y texturas generadas dentro del proyecto; no requiere paquetes de pago ni recursos externos.
 
 ### Abrir y ejecutar
 
