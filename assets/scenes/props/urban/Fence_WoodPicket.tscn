@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/scripts/fence_wood_picket.gd" id="1_fence_script]
+
+[node name="FenceBody" type="StaticBody3D"]
+script = ExtResource("1_fence_script")

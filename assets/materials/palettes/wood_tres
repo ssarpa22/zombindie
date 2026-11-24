@@ -1,0 +1,4 @@
+[subresource type="StandardMaterial3D" id=1]
+albedo_color = Color(0.45, 0.32, 0.18)
+metallic = 0.1
+roughness = 0.85

@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/scripts/hospital_gurney2.gd" id="1_hospital_script]
+
+[node name="GurneyRoot" type="StaticBody3D"]
+script = ExtResource("1_hospital_script")

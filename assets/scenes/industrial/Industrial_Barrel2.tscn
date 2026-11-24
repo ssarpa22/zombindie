@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/scripts/industrial_barrel2.gd" id="1_industrial_script]
+
+[node name="BarrelRoot" type="StaticBody3D"]
+script = ExtResource("1_industrial_script")
