@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/exterior_chimney.gd" id="1_exterior_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="ExteriorBody" type="StaticBody3D"]
-script = ExtResource("1_exterior_script")
+[node name="Exterior_Chimney" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Exterior_Chimney"

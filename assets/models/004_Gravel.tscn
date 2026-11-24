@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_reejv"]
+albedo_color = Color(0.33, 0.31, 0.26, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_av33y"]
+size = Vector3(8, 0.12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mmf3g"]
+size = Vector3(8, 0.12, 8)
+
+[node name="004_Gravel_Tile" type="StaticBody3D" unique_id=1060258643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 0)
+metadata/asset_category = "00_Terrain"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=2027314570]
+material_override = SubResource("StandardMaterial3D_reejv")
+mesh = SubResource("BoxMesh_av33y")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=101600743]
+shape = SubResource("BoxShape3D_mmf3g")

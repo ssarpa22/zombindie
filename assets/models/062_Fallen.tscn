@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfot1"]
+albedo_color = Color(0.15, 0.11, 0.08, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_wk6vx"]
+size = Vector3(2.2, 0.5, 0.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cb3yc"]
+size = Vector3(2.2, 0.5, 0.55)
+
+[node name="052_Fallen_Log" type="StaticBody3D" unique_id=890016451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 108)
+metadata/asset_category = "05_Forest_And_Nature"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1380297855]
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_wk6vx")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=322130353]
+shape = SubResource("BoxShape3D_cb3yc")

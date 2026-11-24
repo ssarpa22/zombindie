@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/wall_half.gd" id="1_wall_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="WallBody" type="StaticBody3D"]
-script = ExtResource("1_wall_script")
+[node name="Wall_Half" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Wall_Half"

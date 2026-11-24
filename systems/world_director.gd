@@ -5,7 +5,14 @@ signal point_discovered(point_id: String, point_name: String)
 
 const POINTS := {
 	"clinic": {"name": "Hospital San Gabriel", "position": Vector3(0.0, 0.0, 0.0), "radius": 22.0},
-	"police_station": {"name": "Comisaría del Bosque", "position": Vector3(1.4, 0.0, 228.0), "radius": 24.0}
+	"police_station": {"name": "Comisaría del Bosque", "position": Vector3(1.4, 0.0, 228.0), "radius": 24.0},
+	"town_ghost": {"name": "Pueblo Las Ánimas", "position": Vector3(-1340.0, 0.0, 1480.0), "radius": 105.0},
+	"industrial_district": {"name": "Distrito industrial", "position": Vector3(620.0, 0.0, 1810.0), "radius": 115.0},
+	"south_terminal": {"name": "Terminal de autopista", "position": Vector3(220.0, 0.0, -1460.0), "radius": 70.0},
+	"sanatorium": {"name": "Complejo sanitario", "position": Vector3(-430.0, 0.0, -820.0), "radius": 65.0},
+	"ranger_shelter": {"name": "Refugio de guardabosques", "position": Vector3(-390.0, 0.0, 620.0), "radius": 38.0},
+	"sewer_access": {"name": "Acceso a cloacas", "position": Vector3(95.0, 0.0, 515.0), "radius": 15.0},
+	"creek_bridge": {"name": "Puente del arroyo", "position": Vector3(-370.0, 0.0, -635.0), "radius": 28.0}
 }
 
 var player: Node3D
@@ -44,6 +51,16 @@ func _region_for(position: Vector3) -> String:
 		return "Clínica San Gabriel"
 	if Vector2(position.x - 1.4, position.z - 228.0).length() < 32.0:
 		return "Comisaría del Bosque"
+	if Vector2(position.x + 1340.0, position.z - 1480.0).length() < 140.0:
+		return "Pueblo Las Ánimas"
+	if Vector2(position.x - 620.0, position.z - 1810.0).length() < 155.0:
+		return "Distrito industrial"
+	if Vector2(position.x - 220.0, position.z + 1460.0).length() < 100.0:
+		return "Terminal de autopista"
+	if Vector2(position.x + 430.0, position.z + 820.0).length() < 95.0:
+		return "Complejo sanitario"
+	if Vector2(position.x + 390.0, position.z - 620.0).length() < 65.0:
+		return "Refugio forestal"
 	if absf(position.z) < 14.0 and absf(position.x) < 26.0:
 		return "Perímetro de la clínica"
 	if absf(position.z) < 235.0 and absf(position.x) < 48.0:

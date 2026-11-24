@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tn3v"]
+albedo_color = Color(0.12, 0.2, 0.12, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_g2dy0"]
+size = Vector3(8, 0.12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7j0cx"]
+size = Vector3(8, 0.12, 8)
+
+[node name="001_Grass_Tile_8m" type="StaticBody3D" unique_id=1542266314]
+metadata/asset_category = "00_Terrain"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=30873114]
+material_override = SubResource("StandardMaterial3D_1tn3v")
+mesh = SubResource("BoxMesh_g2dy0")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=2099058020]
+shape = SubResource("BoxShape3D_7j0cx")

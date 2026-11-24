@@ -45,6 +45,13 @@ La primera escena contiene recepción, un pasillo y salas laterales con puertas 
 - F5: guardar; F9: cargar.
 - F6: abrir/cerrar el selector de clima; G avanza el clima. Con el selector abierto, 1–6 eligen un modo.
 
+### Interfaz y presentación
+
+- La ventana inicia en 1920 × 1080, en modo ventana; la resolución y el modo de pantalla siguen disponibles en Opciones.
+- El HUD compacto muestra estado, sector, hora/clima y objetivo con paneles retractables y accesos rápidos inferiores; la mochila separa suministros, medicina y materiales, informa el peso y permite usar consumibles.
+- La pausa ofrece reanudar, guía, guardar, cargar y volver al menú. Los registros encontrados se muestran en una ventana de lectura.
+- El menú principal, la pausa, la guía y el selector de clima comparten una presentación de alto contraste; las opciones están agrupadas por pantalla, sonido, cámara y reasignación de teclas.
+
 ### Sistemas jugables conectados
 
 - Necesidades de hambre, sed, aguante y temperatura, además de salud, heridas e infección.
@@ -55,6 +62,8 @@ La primera escena contiene recepción, un pasillo y salas laterales con puertas 
 - Misión de recuperar el botiquín y llegar a la comisaría; mapa con coordenadas y lugares descubiertos.
 - Ciclo día/noche de 30 minutos, seis climas seleccionables y comerciantes con un intercambio de comida por medicina.
 - Barricadas construibles, partida guardada en `user://zombindie_save.cfg` y HUD de estado.
+- Lugares de descanso en la clínica y la comisaría; al utilizarse recuperan aguante y heridas mientras hace pasar seis horas de juego, con un periodo de recuperación antes de volver a usarlos.
+- Notas ambientales de la clínica y la comisaría que se pueden leer desde el mundo y muestran su contenido en el HUD.
 - 2.000 ubicaciones de detalles del bosque procesadas en seis lotes de MultiMesh.
 
 ### Prueba automatizada

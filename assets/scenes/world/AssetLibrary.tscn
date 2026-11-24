@@ -1,6 +1,1022 @@
-[gd_scene format=3]
+[gd_scene load_steps=250 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/asset_library.gd" id="1_library_script]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Amphitheater.tscn" id="asset_0001"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Amusement.tscn" id="asset_0002"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Amusement2.tscn" id="asset_0003"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ApartmentBlock.tscn" id="asset_0004"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Aquarium.tscn" id="asset_0005"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Arena.tscn" id="asset_0006"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Arena2.tscn" id="asset_0007"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Bank.tscn" id="asset_0008"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Bank2.tscn" id="asset_0009"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Bathhouse.tscn" id="asset_0010"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_BoatHouse.tscn" id="asset_0011"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Bowling.tscn" id="asset_0012"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_BusStop.tscn" id="asset_0013"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_BusTerminal.tscn" id="asset_0014"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Castle.tscn" id="asset_0015"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Castle2.tscn" id="asset_0016"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Cinema.tscn" id="asset_0017"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Cinema2.tscn" id="asset_0018"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_CityHall.tscn" id="asset_0019"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Clinic.tscn" id="asset_0020"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ClockTower.tscn" id="asset_0021"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ClockTower2.tscn" id="asset_0022"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ClockTower3.tscn" id="asset_0023"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Coliseum.tscn" id="asset_0024"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Convention.tscn" id="asset_0025"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Convention2.tscn" id="asset_0026"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ConventionCenter.tscn" id="asset_0027"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ConvStore2.tscn" id="asset_0028"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_CornerStore.tscn" id="asset_0029"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Cottage.tscn" id="asset_0030"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Courthouse.tscn" id="asset_0031"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Customs.tscn" id="asset_0032"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Distribution.tscn" id="asset_0033"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Duplex.tscn" id="asset_0034"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Factory.tscn" id="asset_0035"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_FerryTerminal.tscn" id="asset_0036"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_FireLookout.tscn" id="asset_0037"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_FireStation.tscn" id="asset_0038"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_FishingShack.tscn" id="asset_0039"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_GasStation.tscn" id="asset_0040"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_GasStation2.tscn" id="asset_0041"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Greenhouse.tscn" id="asset_0042"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Hotel.tscn" id="asset_0043"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_IceRink.tscn" id="asset_0044"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Laboratory.tscn" id="asset_0045"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Library.tscn" id="asset_0046"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Library2.tscn" id="asset_0047"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Library3.tscn" id="asset_0048"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Lighthouse.tscn" id="asset_0049"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Lighthouse2.tscn" id="asset_0050"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Lighthouse3.tscn" id="asset_0051"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Marina.tscn" id="asset_0052"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Motel.tscn" id="asset_0053"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Museum.tscn" id="asset_0054"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Museum2.tscn" id="asset_0055"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Newsstand.tscn" id="asset_0056"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ObservationDeck.tscn" id="asset_0057"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ObservationDeck2.tscn" id="asset_0058"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ObservationTower.tscn" id="asset_0059"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ObservationTower2.tscn" id="asset_0060"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Observatory.tscn" id="asset_0061"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Office.tscn" id="asset_0062"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Pagoda.tscn" id="asset_0063"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Pharmacy.tscn" id="asset_0064"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Pharmacy2.tscn" id="asset_0065"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Planetarium.tscn" id="asset_0066"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_PolicePrecinct.tscn" id="asset_0067"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_PoliceStation.tscn" id="asset_0068"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Pool.tscn" id="asset_0069"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_PostOffice.tscn" id="asset_0070"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_RadioTower.tscn" id="asset_0071"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Restaurant.tscn" id="asset_0072"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Restaurant2.tscn" id="asset_0073"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Ruins.tscn" id="asset_0074"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Ruins2.tscn" id="asset_0075"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Ruins3.tscn" id="asset_0076"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_School.tscn" id="asset_0077"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_ScienceCenter.tscn" id="asset_0078"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiLodge.tscn" id="asset_0079"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiLodge2.tscn" id="asset_0080"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiLodge3.tscn" id="asset_0081"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiLodge4.tscn" id="asset_0082"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiLodge5.tscn" id="asset_0083"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiResort.tscn" id="asset_0084"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiResort2.tscn" id="asset_0085"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SkiResort3.tscn" id="asset_0086"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Skywalk.tscn" id="asset_0087"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SmallHome.tscn" id="asset_0088"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Stadium.tscn" id="asset_0089"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Stadium2.tscn" id="asset_0090"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_TaxiStand.tscn" id="asset_0091"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Theater.tscn" id="asset_0092"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Theater2.tscn" id="asset_0093"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_TrainDepot.tscn" id="asset_0094"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_TrainStation.tscn" id="asset_0095"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_TrainStation2.tscn" id="asset_0096"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Warehouse.tscn" id="asset_0097"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Warehouse2.tscn" id="asset_0098"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Watchtower.tscn" id="asset_0099"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Watchtower2.tscn" id="asset_0100"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Windmill.tscn" id="asset_0101"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Animal_Deer.tscn" id="asset_0102"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Animal_Wolf.tscn" id="asset_0103"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Bed_Rest.tscn" id="asset_0104"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Container_Generic.tscn" id="asset_0105"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Door_Generic.tscn" id="asset_0106"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Gate_Generic.tscn" id="asset_0107"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Generator_Generic.tscn" id="asset_0108"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Light_Fixture.tscn" id="asset_0109"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Loot_Pickup.tscn" id="asset_0110"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Sewer_Hatch.tscn" id="asset_0111"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Switch_Generic.tscn" id="asset_0112"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/Trader_Archetype.tscn" id="asset_0113"]
+[ext_resource type="PackedScene" path="res://assets/scenes/entities/World_Document.tscn" id="asset_0114"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Dead_Tree.tscn" id="asset_0115"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Dead_TreeVariant.tscn" id="asset_0116"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Fallen_Log.tscn" id="asset_0117"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Fallen_LogVariant.tscn" id="asset_0118"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Stump.tscn" id="asset_0119"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Tree_Pine.tscn" id="asset_0120"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Tree_PineVariant.tscn" id="asset_0121"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/Hospital_Bed.tscn" id="asset_0122"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/Hospital_Bed2.tscn" id="asset_0123"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/Hospital_Gurney.tscn" id="asset_0124"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/Hospital_Gurney2.tscn" id="asset_0125"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/Hospital_IVStand.tscn" id="asset_0126"]
+[ext_resource type="PackedScene" path="res://assets/scenes/hospital/OverTable_Generic.tscn" id="asset_0127"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Barrel.tscn" id="asset_0128"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Barrel2.tscn" id="asset_0129"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Compressor2.tscn" id="asset_0130"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Crate.tscn" id="asset_0131"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Crate2.tscn" id="asset_0132"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_FuelDrum.tscn" id="asset_0133"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_FuelDrum2.tscn" id="asset_0134"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Generator.tscn" id="asset_0135"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Generator2.tscn" id="asset_0136"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Tools2.tscn" id="asset_0137"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Abandoned_Vehicle_Car.tscn" id="asset_0138"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Bench_Long.tscn" id="asset_0139"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Bus_Shelter.tscn" id="asset_0140"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Crosswalk.tscn" id="asset_0141"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Curb_Module.tscn" id="asset_0142"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Door_Apartment.tscn" id="asset_0143"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Door_DoubleEntrance.tscn" id="asset_0144"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Door_GarageRoller.tscn" id="asset_0145"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Door_HospitalInterior.tscn" id="asset_0146"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Door_Security.tscn" id="asset_0147"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Drain_CatchBasin.tscn" id="asset_0148"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Balcony.tscn" id="asset_0149"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Chimney.tscn" id="asset_0150"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Downpipe.tscn" id="asset_0151"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_FireEscapeLanding.tscn" id="asset_0152"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Gutter.tscn" id="asset_0153"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Lintel.tscn" id="asset_0154"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_Porch.tscn" id="asset_0155"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Exterior_SupportColumn.tscn" id="asset_0156"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_BarbedWire.tscn" id="asset_0157"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_ChainLink.tscn" id="asset_0158"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_ConcretePerimeter.tscn" id="asset_0159"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_DamagedChain.tscn" id="asset_0160"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_FarmRail.tscn" id="asset_0161"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_GapSection.tscn" id="asset_0162"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_WoodPicket.tscn" id="asset_0163"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fire_EscapeSegment.tscn" id="asset_0164"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fire_Extinguisher.tscn" id="asset_0165"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_Curb.tscn" id="asset_0166"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_Edge.tscn" id="asset_0167"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_Landing.tscn" id="asset_0168"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_RaisedFoundation.tscn" id="asset_0169"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_Slab.tscn" id="asset_0170"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Floor_Tiled.tscn" id="asset_0171"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Gate_Double.tscn" id="asset_0172"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Gate_Single.tscn" id="asset_0173"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Graffiti_Board.tscn" id="asset_0174"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Light_Banner.tscn" id="asset_0175"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Manhole_Cover.tscn" id="asset_0176"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_ApartmentWindow.tscn" id="asset_0177"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_BoardedWindow.tscn" id="asset_0178"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_BrokenWindowFrame.tscn" id="asset_0179"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_DoorOpening.tscn" id="asset_0180"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_DoubleDoorOpening.tscn" id="asset_0181"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_HospitalWindow.tscn" id="asset_0182"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_IndustrialWindow.tscn" id="asset_0183"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_ShopfrontGlazing.tscn" id="asset_0184"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Opening_SolidWall.tscn" id="asset_0185"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Phone_BoothInternal.tscn" id="asset_0186"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Pipe_Utility.tscn" id="asset_0187"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Post_Box.tscn" id="asset_0188"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Poster_Board.tscn" id="asset_0189"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Power_Transformer.tscn" id="asset_0190"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Bench.tscn" id="asset_0191"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Bollard.tscn" id="asset_0192"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_ConstructionBarrier.tscn" id="asset_0193"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Dumpster.tscn" id="asset_0194"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Hydrant.tscn" id="asset_0195"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_JerseyBarrier.tscn" id="asset_0196"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Mailbox.tscn" id="asset_0197"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_PhoneBooth.tscn" id="asset_0198"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_RoadMarker.tscn" id="asset_0199"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_RoadSign.tscn" id="asset_0200"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="asset_0201"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_TrafficCone.tscn" id="asset_0202"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_TrafficLight.tscn" id="asset_0203"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_TrashBin.tscn" id="asset_0204"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_UtilityPole.tscn" id="asset_0205"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_WallLamp.tscn" id="asset_0206"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Railing_Segment.tscn" id="asset_0207"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Road_Bump.tscn" id="asset_0208"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Awning.tscn" id="asset_0209"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Corner.tscn" id="asset_0210"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Damaged.tscn" id="asset_0211"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Flat.tscn" id="asset_0212"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Industrial.tscn" id="asset_0213"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Parapet.tscn" id="asset_0214"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Roof_Pitched.tscn" id="asset_0215"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sewer_Hatch.tscn" id="asset_0216"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_Directional.tscn" id="asset_0217"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_NoEntry.tscn" id="asset_0218"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_NoLeftTurn.tscn" id="asset_0219"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_NoRightTurn.tscn" id="asset_0220"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_WarningLeft.tscn" id="asset_0221"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_WarningRight.tscn" id="asset_0222"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Signal_Pedestrian.tscn" id="asset_0223"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Signal_Traffic.tscn" id="asset_0224"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_ConcreteSteps.tscn" id="asset_0225"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_FireEscape.tscn" id="asset_0226"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_Handrail.tscn" id="asset_0227"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_Ladder.tscn" id="asset_0228"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_Long.tscn" id="asset_0229"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Stair_ShortInterior.tscn" id="asset_0230"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Storm_Grate.tscn" id="asset_0231"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Street_Drain.tscn" id="asset_0232"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Street_LampHead.tscn" id="asset_0233"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Street_Lantern.tscn" id="asset_0234"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Tree_FallMarker.tscn" id="asset_0235"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Tree_FallRoots.tscn" id="asset_0236"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Tree_GridMarker.tscn" id="asset_0237"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Truck_Abandoned.tscn" id="asset_0238"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Vending_Machine.tscn" id="asset_0239"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_1x1.tscn" id="asset_0240"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_2x1.tscn" id="asset_0241"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_4x1.tscn" id="asset_0242"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_Corner.tscn" id="asset_0243"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_Damaged.tscn" id="asset_0244"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_Foundation.tscn" id="asset_0245"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_Half.tscn" id="asset_0246"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_InteriorPartition.tscn" id="asset_0247"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Wall_Retaining.tscn" id="asset_0248"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Warning_Sign.tscn" id="asset_0249"]
 
-[node name="AssetLibraryRoot" type="Node3D"]
-script = ExtResource("1_library_script")
+[node name="AssetLibrary" type="Node3D"]
+
+[node name="Buildings" type="Node3D" parent="."]
+position = Vector3(0, 0, 0)
+
+[node name="Building_Amphitheater" parent="Buildings" instance=ExtResource("asset_0001")]
+position = Vector3(0, 0, 0)
+
+[node name="Building_Amusement" parent="Buildings" instance=ExtResource("asset_0002")]
+position = Vector3(18, 0, 0)
+
+[node name="Building_Amusement2" parent="Buildings" instance=ExtResource("asset_0003")]
+position = Vector3(36, 0, 0)
+
+[node name="Building_ApartmentBlock" parent="Buildings" instance=ExtResource("asset_0004")]
+position = Vector3(54, 0, 0)
+
+[node name="Building_Aquarium" parent="Buildings" instance=ExtResource("asset_0005")]
+position = Vector3(72, 0, 0)
+
+[node name="Building_Arena" parent="Buildings" instance=ExtResource("asset_0006")]
+position = Vector3(90, 0, 0)
+
+[node name="Building_Arena2" parent="Buildings" instance=ExtResource("asset_0007")]
+position = Vector3(108, 0, 0)
+
+[node name="Building_Bank" parent="Buildings" instance=ExtResource("asset_0008")]
+position = Vector3(126, 0, 0)
+
+[node name="Building_Bank2" parent="Buildings" instance=ExtResource("asset_0009")]
+position = Vector3(0, 0, 18)
+
+[node name="Building_Bathhouse" parent="Buildings" instance=ExtResource("asset_0010")]
+position = Vector3(18, 0, 18)
+
+[node name="Building_BoatHouse" parent="Buildings" instance=ExtResource("asset_0011")]
+position = Vector3(36, 0, 18)
+
+[node name="Building_Bowling" parent="Buildings" instance=ExtResource("asset_0012")]
+position = Vector3(54, 0, 18)
+
+[node name="Building_BusStop" parent="Buildings" instance=ExtResource("asset_0013")]
+position = Vector3(72, 0, 18)
+
+[node name="Building_BusTerminal" parent="Buildings" instance=ExtResource("asset_0014")]
+position = Vector3(90, 0, 18)
+
+[node name="Building_Castle" parent="Buildings" instance=ExtResource("asset_0015")]
+position = Vector3(108, 0, 18)
+
+[node name="Building_Castle2" parent="Buildings" instance=ExtResource("asset_0016")]
+position = Vector3(126, 0, 18)
+
+[node name="Building_Cinema" parent="Buildings" instance=ExtResource("asset_0017")]
+position = Vector3(0, 0, 36)
+
+[node name="Building_Cinema2" parent="Buildings" instance=ExtResource("asset_0018")]
+position = Vector3(18, 0, 36)
+
+[node name="Building_CityHall" parent="Buildings" instance=ExtResource("asset_0019")]
+position = Vector3(36, 0, 36)
+
+[node name="Building_Clinic" parent="Buildings" instance=ExtResource("asset_0020")]
+position = Vector3(54, 0, 36)
+
+[node name="Building_ClockTower" parent="Buildings" instance=ExtResource("asset_0021")]
+position = Vector3(72, 0, 36)
+
+[node name="Building_ClockTower2" parent="Buildings" instance=ExtResource("asset_0022")]
+position = Vector3(90, 0, 36)
+
+[node name="Building_ClockTower3" parent="Buildings" instance=ExtResource("asset_0023")]
+position = Vector3(108, 0, 36)
+
+[node name="Building_Coliseum" parent="Buildings" instance=ExtResource("asset_0024")]
+position = Vector3(126, 0, 36)
+
+[node name="Building_Convention" parent="Buildings" instance=ExtResource("asset_0025")]
+position = Vector3(0, 0, 54)
+
+[node name="Building_Convention2" parent="Buildings" instance=ExtResource("asset_0026")]
+position = Vector3(18, 0, 54)
+
+[node name="Building_ConventionCenter" parent="Buildings" instance=ExtResource("asset_0027")]
+position = Vector3(36, 0, 54)
+
+[node name="Building_ConvStore2" parent="Buildings" instance=ExtResource("asset_0028")]
+position = Vector3(54, 0, 54)
+
+[node name="Building_CornerStore" parent="Buildings" instance=ExtResource("asset_0029")]
+position = Vector3(72, 0, 54)
+
+[node name="Building_Cottage" parent="Buildings" instance=ExtResource("asset_0030")]
+position = Vector3(90, 0, 54)
+
+[node name="Building_Courthouse" parent="Buildings" instance=ExtResource("asset_0031")]
+position = Vector3(108, 0, 54)
+
+[node name="Building_Customs" parent="Buildings" instance=ExtResource("asset_0032")]
+position = Vector3(126, 0, 54)
+
+[node name="Building_Distribution" parent="Buildings" instance=ExtResource("asset_0033")]
+position = Vector3(0, 0, 72)
+
+[node name="Building_Duplex" parent="Buildings" instance=ExtResource("asset_0034")]
+position = Vector3(18, 0, 72)
+
+[node name="Building_Factory" parent="Buildings" instance=ExtResource("asset_0035")]
+position = Vector3(36, 0, 72)
+
+[node name="Building_FerryTerminal" parent="Buildings" instance=ExtResource("asset_0036")]
+position = Vector3(54, 0, 72)
+
+[node name="Building_FireLookout" parent="Buildings" instance=ExtResource("asset_0037")]
+position = Vector3(72, 0, 72)
+
+[node name="Building_FireStation" parent="Buildings" instance=ExtResource("asset_0038")]
+position = Vector3(90, 0, 72)
+
+[node name="Building_FishingShack" parent="Buildings" instance=ExtResource("asset_0039")]
+position = Vector3(108, 0, 72)
+
+[node name="Building_GasStation" parent="Buildings" instance=ExtResource("asset_0040")]
+position = Vector3(126, 0, 72)
+
+[node name="Building_GasStation2" parent="Buildings" instance=ExtResource("asset_0041")]
+position = Vector3(0, 0, 90)
+
+[node name="Building_Greenhouse" parent="Buildings" instance=ExtResource("asset_0042")]
+position = Vector3(18, 0, 90)
+
+[node name="Building_Hotel" parent="Buildings" instance=ExtResource("asset_0043")]
+position = Vector3(36, 0, 90)
+
+[node name="Building_IceRink" parent="Buildings" instance=ExtResource("asset_0044")]
+position = Vector3(54, 0, 90)
+
+[node name="Building_Laboratory" parent="Buildings" instance=ExtResource("asset_0045")]
+position = Vector3(72, 0, 90)
+
+[node name="Building_Library" parent="Buildings" instance=ExtResource("asset_0046")]
+position = Vector3(90, 0, 90)
+
+[node name="Building_Library2" parent="Buildings" instance=ExtResource("asset_0047")]
+position = Vector3(108, 0, 90)
+
+[node name="Building_Library3" parent="Buildings" instance=ExtResource("asset_0048")]
+position = Vector3(126, 0, 90)
+
+[node name="Building_Lighthouse" parent="Buildings" instance=ExtResource("asset_0049")]
+position = Vector3(0, 0, 108)
+
+[node name="Building_Lighthouse2" parent="Buildings" instance=ExtResource("asset_0050")]
+position = Vector3(18, 0, 108)
+
+[node name="Building_Lighthouse3" parent="Buildings" instance=ExtResource("asset_0051")]
+position = Vector3(36, 0, 108)
+
+[node name="Building_Marina" parent="Buildings" instance=ExtResource("asset_0052")]
+position = Vector3(54, 0, 108)
+
+[node name="Building_Motel" parent="Buildings" instance=ExtResource("asset_0053")]
+position = Vector3(72, 0, 108)
+
+[node name="Building_Museum" parent="Buildings" instance=ExtResource("asset_0054")]
+position = Vector3(90, 0, 108)
+
+[node name="Building_Museum2" parent="Buildings" instance=ExtResource("asset_0055")]
+position = Vector3(108, 0, 108)
+
+[node name="Building_Newsstand" parent="Buildings" instance=ExtResource("asset_0056")]
+position = Vector3(126, 0, 108)
+
+[node name="Building_ObservationDeck" parent="Buildings" instance=ExtResource("asset_0057")]
+position = Vector3(0, 0, 126)
+
+[node name="Building_ObservationDeck2" parent="Buildings" instance=ExtResource("asset_0058")]
+position = Vector3(18, 0, 126)
+
+[node name="Building_ObservationTower" parent="Buildings" instance=ExtResource("asset_0059")]
+position = Vector3(36, 0, 126)
+
+[node name="Building_ObservationTower2" parent="Buildings" instance=ExtResource("asset_0060")]
+position = Vector3(54, 0, 126)
+
+[node name="Building_Observatory" parent="Buildings" instance=ExtResource("asset_0061")]
+position = Vector3(72, 0, 126)
+
+[node name="Building_Office" parent="Buildings" instance=ExtResource("asset_0062")]
+position = Vector3(90, 0, 126)
+
+[node name="Building_Pagoda" parent="Buildings" instance=ExtResource("asset_0063")]
+position = Vector3(108, 0, 126)
+
+[node name="Building_Pharmacy" parent="Buildings" instance=ExtResource("asset_0064")]
+position = Vector3(126, 0, 126)
+
+[node name="Building_Pharmacy2" parent="Buildings" instance=ExtResource("asset_0065")]
+position = Vector3(0, 0, 144)
+
+[node name="Building_Planetarium" parent="Buildings" instance=ExtResource("asset_0066")]
+position = Vector3(18, 0, 144)
+
+[node name="Building_PolicePrecinct" parent="Buildings" instance=ExtResource("asset_0067")]
+position = Vector3(36, 0, 144)
+
+[node name="Building_PoliceStation" parent="Buildings" instance=ExtResource("asset_0068")]
+position = Vector3(54, 0, 144)
+
+[node name="Building_Pool" parent="Buildings" instance=ExtResource("asset_0069")]
+position = Vector3(72, 0, 144)
+
+[node name="Building_PostOffice" parent="Buildings" instance=ExtResource("asset_0070")]
+position = Vector3(90, 0, 144)
+
+[node name="Building_RadioTower" parent="Buildings" instance=ExtResource("asset_0071")]
+position = Vector3(108, 0, 144)
+
+[node name="Building_Restaurant" parent="Buildings" instance=ExtResource("asset_0072")]
+position = Vector3(126, 0, 144)
+
+[node name="Building_Restaurant2" parent="Buildings" instance=ExtResource("asset_0073")]
+position = Vector3(0, 0, 162)
+
+[node name="Building_Ruins" parent="Buildings" instance=ExtResource("asset_0074")]
+position = Vector3(18, 0, 162)
+
+[node name="Building_Ruins2" parent="Buildings" instance=ExtResource("asset_0075")]
+position = Vector3(36, 0, 162)
+
+[node name="Building_Ruins3" parent="Buildings" instance=ExtResource("asset_0076")]
+position = Vector3(54, 0, 162)
+
+[node name="Building_School" parent="Buildings" instance=ExtResource("asset_0077")]
+position = Vector3(72, 0, 162)
+
+[node name="Building_ScienceCenter" parent="Buildings" instance=ExtResource("asset_0078")]
+position = Vector3(90, 0, 162)
+
+[node name="Building_SkiLodge" parent="Buildings" instance=ExtResource("asset_0079")]
+position = Vector3(108, 0, 162)
+
+[node name="Building_SkiLodge2" parent="Buildings" instance=ExtResource("asset_0080")]
+position = Vector3(126, 0, 162)
+
+[node name="Building_SkiLodge3" parent="Buildings" instance=ExtResource("asset_0081")]
+position = Vector3(0, 0, 180)
+
+[node name="Building_SkiLodge4" parent="Buildings" instance=ExtResource("asset_0082")]
+position = Vector3(18, 0, 180)
+
+[node name="Building_SkiLodge5" parent="Buildings" instance=ExtResource("asset_0083")]
+position = Vector3(36, 0, 180)
+
+[node name="Building_SkiResort" parent="Buildings" instance=ExtResource("asset_0084")]
+position = Vector3(54, 0, 180)
+
+[node name="Building_SkiResort2" parent="Buildings" instance=ExtResource("asset_0085")]
+position = Vector3(72, 0, 180)
+
+[node name="Building_SkiResort3" parent="Buildings" instance=ExtResource("asset_0086")]
+position = Vector3(90, 0, 180)
+
+[node name="Building_Skywalk" parent="Buildings" instance=ExtResource("asset_0087")]
+position = Vector3(108, 0, 180)
+
+[node name="Building_SmallHome" parent="Buildings" instance=ExtResource("asset_0088")]
+position = Vector3(126, 0, 180)
+
+[node name="Building_Stadium" parent="Buildings" instance=ExtResource("asset_0089")]
+position = Vector3(0, 0, 198)
+
+[node name="Building_Stadium2" parent="Buildings" instance=ExtResource("asset_0090")]
+position = Vector3(18, 0, 198)
+
+[node name="Building_TaxiStand" parent="Buildings" instance=ExtResource("asset_0091")]
+position = Vector3(36, 0, 198)
+
+[node name="Building_Theater" parent="Buildings" instance=ExtResource("asset_0092")]
+position = Vector3(54, 0, 198)
+
+[node name="Building_Theater2" parent="Buildings" instance=ExtResource("asset_0093")]
+position = Vector3(72, 0, 198)
+
+[node name="Building_TrainDepot" parent="Buildings" instance=ExtResource("asset_0094")]
+position = Vector3(90, 0, 198)
+
+[node name="Building_TrainStation" parent="Buildings" instance=ExtResource("asset_0095")]
+position = Vector3(108, 0, 198)
+
+[node name="Building_TrainStation2" parent="Buildings" instance=ExtResource("asset_0096")]
+position = Vector3(126, 0, 198)
+
+[node name="Building_Warehouse" parent="Buildings" instance=ExtResource("asset_0097")]
+position = Vector3(0, 0, 216)
+
+[node name="Building_Warehouse2" parent="Buildings" instance=ExtResource("asset_0098")]
+position = Vector3(18, 0, 216)
+
+[node name="Building_Watchtower" parent="Buildings" instance=ExtResource("asset_0099")]
+position = Vector3(36, 0, 216)
+
+[node name="Building_Watchtower2" parent="Buildings" instance=ExtResource("asset_0100")]
+position = Vector3(54, 0, 216)
+
+[node name="Building_Windmill" parent="Buildings" instance=ExtResource("asset_0101")]
+position = Vector3(72, 0, 216)
+
+[node name="Entities" type="Node3D" parent="."]
+position = Vector3(250, 0, 0)
+
+[node name="Animal_Deer" parent="Entities" instance=ExtResource("asset_0102")]
+position = Vector3(0, 0, 0)
+
+[node name="Animal_Wolf" parent="Entities" instance=ExtResource("asset_0103")]
+position = Vector3(8, 0, 0)
+
+[node name="Bed_Rest" parent="Entities" instance=ExtResource("asset_0104")]
+position = Vector3(16, 0, 0)
+
+[node name="Container_Generic" parent="Entities" instance=ExtResource("asset_0105")]
+position = Vector3(24, 0, 0)
+
+[node name="Door_Generic" parent="Entities" instance=ExtResource("asset_0106")]
+position = Vector3(32, 0, 0)
+
+[node name="Gate_Generic" parent="Entities" instance=ExtResource("asset_0107")]
+position = Vector3(40, 0, 0)
+
+[node name="Generator_Generic" parent="Entities" instance=ExtResource("asset_0108")]
+position = Vector3(48, 0, 0)
+
+[node name="Light_Fixture" parent="Entities" instance=ExtResource("asset_0109")]
+position = Vector3(56, 0, 0)
+
+[node name="Loot_Pickup" parent="Entities" instance=ExtResource("asset_0110")]
+position = Vector3(64, 0, 0)
+
+[node name="Sewer_Hatch" parent="Entities" instance=ExtResource("asset_0111")]
+position = Vector3(72, 0, 0)
+
+[node name="Switch_Generic" parent="Entities" instance=ExtResource("asset_0112")]
+position = Vector3(0, 0, 8)
+
+[node name="Trader_Archetype" parent="Entities" instance=ExtResource("asset_0113")]
+position = Vector3(8, 0, 8)
+
+[node name="World_Document" parent="Entities" instance=ExtResource("asset_0114")]
+position = Vector3(16, 0, 8)
+
+[node name="Forest" type="Node3D" parent="."]
+position = Vector3(320, 0, 0)
+
+[node name="Dead_Tree" parent="Forest" instance=ExtResource("asset_0115")]
+position = Vector3(0, 0, 0)
+
+[node name="Dead_TreeVariant" parent="Forest" instance=ExtResource("asset_0116")]
+position = Vector3(8, 0, 0)
+
+[node name="Fallen_Log" parent="Forest" instance=ExtResource("asset_0117")]
+position = Vector3(16, 0, 0)
+
+[node name="Fallen_LogVariant" parent="Forest" instance=ExtResource("asset_0118")]
+position = Vector3(24, 0, 0)
+
+[node name="Stump" parent="Forest" instance=ExtResource("asset_0119")]
+position = Vector3(32, 0, 0)
+
+[node name="Tree_Pine" parent="Forest" instance=ExtResource("asset_0120")]
+position = Vector3(40, 0, 0)
+
+[node name="Tree_PineVariant" parent="Forest" instance=ExtResource("asset_0121")]
+position = Vector3(48, 0, 0)
+
+[node name="Hospital" type="Node3D" parent="."]
+position = Vector3(390, 0, 0)
+
+[node name="Hospital_Bed" parent="Hospital" instance=ExtResource("asset_0122")]
+position = Vector3(0, 0, 0)
+
+[node name="Hospital_Bed2" parent="Hospital" instance=ExtResource("asset_0123")]
+position = Vector3(8, 0, 0)
+
+[node name="Hospital_Gurney" parent="Hospital" instance=ExtResource("asset_0124")]
+position = Vector3(16, 0, 0)
+
+[node name="Hospital_Gurney2" parent="Hospital" instance=ExtResource("asset_0125")]
+position = Vector3(24, 0, 0)
+
+[node name="Hospital_IVStand" parent="Hospital" instance=ExtResource("asset_0126")]
+position = Vector3(32, 0, 0)
+
+[node name="OverTable_Generic" parent="Hospital" instance=ExtResource("asset_0127")]
+position = Vector3(40, 0, 0)
+
+[node name="Industrial" type="Node3D" parent="."]
+position = Vector3(460, 0, 0)
+
+[node name="Industrial_Barrel" parent="Industrial" instance=ExtResource("asset_0128")]
+position = Vector3(0, 0, 0)
+
+[node name="Industrial_Barrel2" parent="Industrial" instance=ExtResource("asset_0129")]
+position = Vector3(8, 0, 0)
+
+[node name="Industrial_Compressor2" parent="Industrial" instance=ExtResource("asset_0130")]
+position = Vector3(16, 0, 0)
+
+[node name="Industrial_Crate" parent="Industrial" instance=ExtResource("asset_0131")]
+position = Vector3(24, 0, 0)
+
+[node name="Industrial_Crate2" parent="Industrial" instance=ExtResource("asset_0132")]
+position = Vector3(32, 0, 0)
+
+[node name="Industrial_FuelDrum" parent="Industrial" instance=ExtResource("asset_0133")]
+position = Vector3(40, 0, 0)
+
+[node name="Industrial_FuelDrum2" parent="Industrial" instance=ExtResource("asset_0134")]
+position = Vector3(48, 0, 0)
+
+[node name="Industrial_Generator" parent="Industrial" instance=ExtResource("asset_0135")]
+position = Vector3(56, 0, 0)
+
+[node name="Industrial_Generator2" parent="Industrial" instance=ExtResource("asset_0136")]
+position = Vector3(64, 0, 0)
+
+[node name="Industrial_Tools2" parent="Industrial" instance=ExtResource("asset_0137")]
+position = Vector3(72, 0, 0)
+
+[node name="Urban" type="Node3D" parent="."]
+position = Vector3(560, 0, 0)
+
+[node name="Abandoned_Vehicle_Car" parent="Urban" instance=ExtResource("asset_0138")]
+position = Vector3(0, 0, 0)
+
+[node name="Bench_Long" parent="Urban" instance=ExtResource("asset_0139")]
+position = Vector3(8, 0, 0)
+
+[node name="Bus_Shelter" parent="Urban" instance=ExtResource("asset_0140")]
+position = Vector3(16, 0, 0)
+
+[node name="Crosswalk" parent="Urban" instance=ExtResource("asset_0141")]
+position = Vector3(24, 0, 0)
+
+[node name="Curb_Module" parent="Urban" instance=ExtResource("asset_0142")]
+position = Vector3(32, 0, 0)
+
+[node name="Door_Apartment" parent="Urban" instance=ExtResource("asset_0143")]
+position = Vector3(40, 0, 0)
+
+[node name="Door_DoubleEntrance" parent="Urban" instance=ExtResource("asset_0144")]
+position = Vector3(48, 0, 0)
+
+[node name="Door_GarageRoller" parent="Urban" instance=ExtResource("asset_0145")]
+position = Vector3(56, 0, 0)
+
+[node name="Door_HospitalInterior" parent="Urban" instance=ExtResource("asset_0146")]
+position = Vector3(64, 0, 0)
+
+[node name="Door_Security" parent="Urban" instance=ExtResource("asset_0147")]
+position = Vector3(72, 0, 0)
+
+[node name="Drain_CatchBasin" parent="Urban" instance=ExtResource("asset_0148")]
+position = Vector3(0, 0, 8)
+
+[node name="Exterior_Balcony" parent="Urban" instance=ExtResource("asset_0149")]
+position = Vector3(8, 0, 8)
+
+[node name="Exterior_Chimney" parent="Urban" instance=ExtResource("asset_0150")]
+position = Vector3(16, 0, 8)
+
+[node name="Exterior_Downpipe" parent="Urban" instance=ExtResource("asset_0151")]
+position = Vector3(24, 0, 8)
+
+[node name="Exterior_FireEscapeLanding" parent="Urban" instance=ExtResource("asset_0152")]
+position = Vector3(32, 0, 8)
+
+[node name="Exterior_Gutter" parent="Urban" instance=ExtResource("asset_0153")]
+position = Vector3(40, 0, 8)
+
+[node name="Exterior_Lintel" parent="Urban" instance=ExtResource("asset_0154")]
+position = Vector3(48, 0, 8)
+
+[node name="Exterior_Porch" parent="Urban" instance=ExtResource("asset_0155")]
+position = Vector3(56, 0, 8)
+
+[node name="Exterior_SupportColumn" parent="Urban" instance=ExtResource("asset_0156")]
+position = Vector3(64, 0, 8)
+
+[node name="Fence_BarbedWire" parent="Urban" instance=ExtResource("asset_0157")]
+position = Vector3(72, 0, 8)
+
+[node name="Fence_ChainLink" parent="Urban" instance=ExtResource("asset_0158")]
+position = Vector3(0, 0, 16)
+
+[node name="Fence_ConcretePerimeter" parent="Urban" instance=ExtResource("asset_0159")]
+position = Vector3(8, 0, 16)
+
+[node name="Fence_DamagedChain" parent="Urban" instance=ExtResource("asset_0160")]
+position = Vector3(16, 0, 16)
+
+[node name="Fence_FarmRail" parent="Urban" instance=ExtResource("asset_0161")]
+position = Vector3(24, 0, 16)
+
+[node name="Fence_GapSection" parent="Urban" instance=ExtResource("asset_0162")]
+position = Vector3(32, 0, 16)
+
+[node name="Fence_WoodPicket" parent="Urban" instance=ExtResource("asset_0163")]
+position = Vector3(40, 0, 16)
+
+[node name="Fire_EscapeSegment" parent="Urban" instance=ExtResource("asset_0164")]
+position = Vector3(48, 0, 16)
+
+[node name="Fire_Extinguisher" parent="Urban" instance=ExtResource("asset_0165")]
+position = Vector3(56, 0, 16)
+
+[node name="Floor_Curb" parent="Urban" instance=ExtResource("asset_0166")]
+position = Vector3(64, 0, 16)
+
+[node name="Floor_Edge" parent="Urban" instance=ExtResource("asset_0167")]
+position = Vector3(72, 0, 16)
+
+[node name="Floor_Landing" parent="Urban" instance=ExtResource("asset_0168")]
+position = Vector3(0, 0, 24)
+
+[node name="Floor_RaisedFoundation" parent="Urban" instance=ExtResource("asset_0169")]
+position = Vector3(8, 0, 24)
+
+[node name="Floor_Slab" parent="Urban" instance=ExtResource("asset_0170")]
+position = Vector3(16, 0, 24)
+
+[node name="Floor_Tiled" parent="Urban" instance=ExtResource("asset_0171")]
+position = Vector3(24, 0, 24)
+
+[node name="Gate_Double" parent="Urban" instance=ExtResource("asset_0172")]
+position = Vector3(32, 0, 24)
+
+[node name="Gate_Single" parent="Urban" instance=ExtResource("asset_0173")]
+position = Vector3(40, 0, 24)
+
+[node name="Graffiti_Board" parent="Urban" instance=ExtResource("asset_0174")]
+position = Vector3(48, 0, 24)
+
+[node name="Light_Banner" parent="Urban" instance=ExtResource("asset_0175")]
+position = Vector3(56, 0, 24)
+
+[node name="Manhole_Cover" parent="Urban" instance=ExtResource("asset_0176")]
+position = Vector3(64, 0, 24)
+
+[node name="Opening_ApartmentWindow" parent="Urban" instance=ExtResource("asset_0177")]
+position = Vector3(72, 0, 24)
+
+[node name="Opening_BoardedWindow" parent="Urban" instance=ExtResource("asset_0178")]
+position = Vector3(0, 0, 32)
+
+[node name="Opening_BrokenWindowFrame" parent="Urban" instance=ExtResource("asset_0179")]
+position = Vector3(8, 0, 32)
+
+[node name="Opening_DoorOpening" parent="Urban" instance=ExtResource("asset_0180")]
+position = Vector3(16, 0, 32)
+
+[node name="Opening_DoubleDoorOpening" parent="Urban" instance=ExtResource("asset_0181")]
+position = Vector3(24, 0, 32)
+
+[node name="Opening_HospitalWindow" parent="Urban" instance=ExtResource("asset_0182")]
+position = Vector3(32, 0, 32)
+
+[node name="Opening_IndustrialWindow" parent="Urban" instance=ExtResource("asset_0183")]
+position = Vector3(40, 0, 32)
+
+[node name="Opening_ShopfrontGlazing" parent="Urban" instance=ExtResource("asset_0184")]
+position = Vector3(48, 0, 32)
+
+[node name="Opening_SolidWall" parent="Urban" instance=ExtResource("asset_0185")]
+position = Vector3(56, 0, 32)
+
+[node name="Phone_BoothInternal" parent="Urban" instance=ExtResource("asset_0186")]
+position = Vector3(64, 0, 32)
+
+[node name="Pipe_Utility" parent="Urban" instance=ExtResource("asset_0187")]
+position = Vector3(72, 0, 32)
+
+[node name="Post_Box" parent="Urban" instance=ExtResource("asset_0188")]
+position = Vector3(0, 0, 40)
+
+[node name="Poster_Board" parent="Urban" instance=ExtResource("asset_0189")]
+position = Vector3(8, 0, 40)
+
+[node name="Power_Transformer" parent="Urban" instance=ExtResource("asset_0190")]
+position = Vector3(16, 0, 40)
+
+[node name="Prop_Bench" parent="Urban" instance=ExtResource("asset_0191")]
+position = Vector3(24, 0, 40)
+
+[node name="Prop_Bollard" parent="Urban" instance=ExtResource("asset_0192")]
+position = Vector3(32, 0, 40)
+
+[node name="Prop_ConstructionBarrier" parent="Urban" instance=ExtResource("asset_0193")]
+position = Vector3(40, 0, 40)
+
+[node name="Prop_Dumpster" parent="Urban" instance=ExtResource("asset_0194")]
+position = Vector3(48, 0, 40)
+
+[node name="Prop_Hydrant" parent="Urban" instance=ExtResource("asset_0195")]
+position = Vector3(56, 0, 40)
+
+[node name="Prop_JerseyBarrier" parent="Urban" instance=ExtResource("asset_0196")]
+position = Vector3(64, 0, 40)
+
+[node name="Prop_Mailbox" parent="Urban" instance=ExtResource("asset_0197")]
+position = Vector3(72, 0, 40)
+
+[node name="Prop_PhoneBooth" parent="Urban" instance=ExtResource("asset_0198")]
+position = Vector3(0, 0, 48)
+
+[node name="Prop_RoadMarker" parent="Urban" instance=ExtResource("asset_0199")]
+position = Vector3(8, 0, 48)
+
+[node name="Prop_RoadSign" parent="Urban" instance=ExtResource("asset_0200")]
+position = Vector3(16, 0, 48)
+
+[node name="Prop_StreetLamp" parent="Urban" instance=ExtResource("asset_0201")]
+position = Vector3(24, 0, 48)
+
+[node name="Prop_TrafficCone" parent="Urban" instance=ExtResource("asset_0202")]
+position = Vector3(32, 0, 48)
+
+[node name="Prop_TrafficLight" parent="Urban" instance=ExtResource("asset_0203")]
+position = Vector3(40, 0, 48)
+
+[node name="Prop_TrashBin" parent="Urban" instance=ExtResource("asset_0204")]
+position = Vector3(48, 0, 48)
+
+[node name="Prop_UtilityPole" parent="Urban" instance=ExtResource("asset_0205")]
+position = Vector3(56, 0, 48)
+
+[node name="Prop_WallLamp" parent="Urban" instance=ExtResource("asset_0206")]
+position = Vector3(64, 0, 48)
+
+[node name="Railing_Segment" parent="Urban" instance=ExtResource("asset_0207")]
+position = Vector3(72, 0, 48)
+
+[node name="Road_Bump" parent="Urban" instance=ExtResource("asset_0208")]
+position = Vector3(0, 0, 56)
+
+[node name="Roof_Awning" parent="Urban" instance=ExtResource("asset_0209")]
+position = Vector3(8, 0, 56)
+
+[node name="Roof_Corner" parent="Urban" instance=ExtResource("asset_0210")]
+position = Vector3(16, 0, 56)
+
+[node name="Roof_Damaged" parent="Urban" instance=ExtResource("asset_0211")]
+position = Vector3(24, 0, 56)
+
+[node name="Roof_Flat" parent="Urban" instance=ExtResource("asset_0212")]
+position = Vector3(32, 0, 56)
+
+[node name="Roof_Industrial" parent="Urban" instance=ExtResource("asset_0213")]
+position = Vector3(40, 0, 56)
+
+[node name="Roof_Parapet" parent="Urban" instance=ExtResource("asset_0214")]
+position = Vector3(48, 0, 56)
+
+[node name="Roof_Pitched" parent="Urban" instance=ExtResource("asset_0215")]
+position = Vector3(56, 0, 56)
+
+[node name="Sewer_Hatch" parent="Urban" instance=ExtResource("asset_0216")]
+position = Vector3(64, 0, 56)
+
+[node name="Sign_Directional" parent="Urban" instance=ExtResource("asset_0217")]
+position = Vector3(72, 0, 56)
+
+[node name="Sign_NoEntry" parent="Urban" instance=ExtResource("asset_0218")]
+position = Vector3(0, 0, 64)
+
+[node name="Sign_NoLeftTurn" parent="Urban" instance=ExtResource("asset_0219")]
+position = Vector3(8, 0, 64)
+
+[node name="Sign_NoRightTurn" parent="Urban" instance=ExtResource("asset_0220")]
+position = Vector3(16, 0, 64)
+
+[node name="Sign_WarningLeft" parent="Urban" instance=ExtResource("asset_0221")]
+position = Vector3(24, 0, 64)
+
+[node name="Sign_WarningRight" parent="Urban" instance=ExtResource("asset_0222")]
+position = Vector3(32, 0, 64)
+
+[node name="Signal_Pedestrian" parent="Urban" instance=ExtResource("asset_0223")]
+position = Vector3(40, 0, 64)
+
+[node name="Signal_Traffic" parent="Urban" instance=ExtResource("asset_0224")]
+position = Vector3(48, 0, 64)
+
+[node name="Stair_ConcreteSteps" parent="Urban" instance=ExtResource("asset_0225")]
+position = Vector3(56, 0, 64)
+
+[node name="Stair_FireEscape" parent="Urban" instance=ExtResource("asset_0226")]
+position = Vector3(64, 0, 64)
+
+[node name="Stair_Handrail" parent="Urban" instance=ExtResource("asset_0227")]
+position = Vector3(72, 0, 64)
+
+[node name="Stair_Ladder" parent="Urban" instance=ExtResource("asset_0228")]
+position = Vector3(0, 0, 72)
+
+[node name="Stair_Long" parent="Urban" instance=ExtResource("asset_0229")]
+position = Vector3(8, 0, 72)
+
+[node name="Stair_ShortInterior" parent="Urban" instance=ExtResource("asset_0230")]
+position = Vector3(16, 0, 72)
+
+[node name="Storm_Grate" parent="Urban" instance=ExtResource("asset_0231")]
+position = Vector3(24, 0, 72)
+
+[node name="Street_Drain" parent="Urban" instance=ExtResource("asset_0232")]
+position = Vector3(32, 0, 72)
+
+[node name="Street_LampHead" parent="Urban" instance=ExtResource("asset_0233")]
+position = Vector3(40, 0, 72)
+
+[node name="Street_Lantern" parent="Urban" instance=ExtResource("asset_0234")]
+position = Vector3(48, 0, 72)
+
+[node name="Tree_FallMarker" parent="Urban" instance=ExtResource("asset_0235")]
+position = Vector3(56, 0, 72)
+
+[node name="Tree_FallRoots" parent="Urban" instance=ExtResource("asset_0236")]
+position = Vector3(64, 0, 72)
+
+[node name="Tree_GridMarker" parent="Urban" instance=ExtResource("asset_0237")]
+position = Vector3(72, 0, 72)
+
+[node name="Truck_Abandoned" parent="Urban" instance=ExtResource("asset_0238")]
+position = Vector3(0, 0, 80)
+
+[node name="Vending_Machine" parent="Urban" instance=ExtResource("asset_0239")]
+position = Vector3(8, 0, 80)
+
+[node name="Wall_1x1" parent="Urban" instance=ExtResource("asset_0240")]
+position = Vector3(16, 0, 80)
+
+[node name="Wall_2x1" parent="Urban" instance=ExtResource("asset_0241")]
+position = Vector3(24, 0, 80)
+
+[node name="Wall_4x1" parent="Urban" instance=ExtResource("asset_0242")]
+position = Vector3(32, 0, 80)
+
+[node name="Wall_Corner" parent="Urban" instance=ExtResource("asset_0243")]
+position = Vector3(40, 0, 80)
+
+[node name="Wall_Damaged" parent="Urban" instance=ExtResource("asset_0244")]
+position = Vector3(48, 0, 80)
+
+[node name="Wall_Foundation" parent="Urban" instance=ExtResource("asset_0245")]
+position = Vector3(56, 0, 80)
+
+[node name="Wall_Half" parent="Urban" instance=ExtResource("asset_0246")]
+position = Vector3(64, 0, 80)
+
+[node name="Wall_InteriorPartition" parent="Urban" instance=ExtResource("asset_0247")]
+position = Vector3(72, 0, 80)
+
+[node name="Wall_Retaining" parent="Urban" instance=ExtResource("asset_0248")]
+position = Vector3(0, 0, 88)
+
+[node name="Warning_Sign" parent="Urban" instance=ExtResource("asset_0249")]
+position = Vector3(8, 0, 88)
+
+[node name="ShowroomLight" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.8, 0.6, 0)
+light_energy = 1.2

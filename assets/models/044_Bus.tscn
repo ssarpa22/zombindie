@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_x2s5w"]
+size = Vector3(2.6, 2.3, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e7qkv"]
+size = Vector3(2.6, 2.3, 1.2)
+
+[node name="044_Bus_Stop_Shelter" type="StaticBody3D" unique_id=1769097877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 90)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=55213726]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_x2s5w")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=876124220]
+shape = SubResource("BoxShape3D_e7qkv")

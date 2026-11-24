@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_lesp8"]
+size = Vector3(0.12, 2.5, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jpkad"]
+size = Vector3(0.12, 2.5, 0.12)
+
+[node name="036_Road_Sign_Post" type="StaticBody3D" unique_id=1442962291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1673068830]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_lesp8")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=948181240]
+shape = SubResource("BoxShape3D_jpkad")

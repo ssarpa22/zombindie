@@ -1,11 +1,15 @@
 extends Node3D
 
-const WEATHER_NAMES := ["Noche despejada", "Neblina", "Nublado", "Lluvia", "Nieve", "Viento"]
+const UIStyle = preload("res://ui/ui_style.gd")
+const WEATHER_NAMES := ["Despejado", "Neblina", "Nublado", "Lluvia", "Nieve", "Viento"]
+
+signal weather_event(event_position: Vector3, radius: float, message: String)
 
 var world_environment: WorldEnvironment
 var moon_light: DirectionalLight3D
 var moon_mesh: MeshInstance3D
 var player: Node3D
+var world_clock: Node
 var weather_index := 0
 var _moon_angle := PI
 var _moon_material: StandardMaterial3D
@@ -14,12 +18,19 @@ var _daylight_factor := 0.0
 var _clock_driven := false
 var _key_cooldown := 0.0
 var _clouds: Node3D
+var _cloud_bank: MeshInstance3D
 var _rain: CPUParticles3D
 var _snow: CPUParticles3D
 var _wind: CPUParticles3D
 var _cloud_material: StandardMaterial3D
 var _weather_menu: PanelContainer
 var _weather_status: Label
+var _time_status: Label
+var _day_length_status: Label
+var _time_slider: HSlider
+var _day_length_slider: HSlider
+var _cycle_toggle: CheckButton
+var _auto_weather_toggle: CheckButton
 var _menu_open := false
 var _menu_cooldown := 0.0
 var _stars: MultiMeshInstance3D
@@ -30,6 +41,14 @@ var _cloud_drift := 0.0
 var _cloud_drift_offset := 0.0
 var _tree_canopies: Array = []
 var _wind_materials: Array[ShaderMaterial] = []
+var _weather_rng := RandomNumberGenerator.new()
+var _applied_weather_quality := -1
+var _weather_auto := false
+var _weather_auto_timer := 0.0
+var _lightning_light: OmniLight3D
+var _lightning_timer := 24.0
+var _lightning_flash_timer := 0.0
+var _thunder_delay := 0.0
 
 func bind_scene(scene_root: Node) -> void:
 	var found := _find_scene_nodes(scene_root)
@@ -85,16 +104,27 @@ func configure(env: WorldEnvironment, light: DirectionalLight3D, moon: MeshInsta
 	_apply_weather()
 
 func _ready() -> void:
+	_weather_rng.randomize()
+	_lightning_timer = _weather_rng.randf_range(18.0, 34.0)
+	# Ensure daytime starting condition
+	_set_weather_mode(0, true)  # Despejado = clear/daytime
 	_build_weather_effects()
 	_build_weather_menu()
 	_ensure_sky_effects()
 	_apply_weather()
 
+func bind_world_clock(clock: Node) -> void:
+	world_clock = clock
+	if not world_clock.is_connected("time_changed", _on_clock_changed):
+		world_clock.connect("time_changed", _on_clock_changed)
+	_sync_clock_controls()
+
 func set_world_phase(phase: float, daylight: float) -> void:
 	_world_phase = fposmod(phase, 1.0)
 	_daylight_factor = clampf(daylight, 0.0, 1.0)
 	_clock_driven = true
-	_apply_celestial_state()
+	_apply_weather()
+	_sync_clock_controls()
 
 func _ensure_sky_effects() -> void:
 	if not is_instance_valid(_stars):
@@ -110,6 +140,8 @@ func _ensure_sky_effects() -> void:
 func _process(delta: float) -> void:
 	_key_cooldown = maxf(0.0, _key_cooldown - delta)
 	_menu_cooldown = maxf(0.0, _menu_cooldown - delta)
+	_update_weather_automation(delta)
+	_update_lightning(delta)
 	if Input.is_action_just_pressed("weather_menu") and _menu_cooldown <= 0.0:
 		_menu_cooldown = 0.3
 		_menu_open = not _menu_open
@@ -136,15 +168,19 @@ func _process(delta: float) -> void:
 			_snow.global_position = player.global_position + Vector3(0.0, 9.0, 0.0)
 		if is_instance_valid(_wind):
 			_wind.global_position = player.global_position + Vector3(0.0, 1.5, 0.0)
+		if is_instance_valid(_lightning_light) and _lightning_flash_timer > 0.0:
+			_lightning_light.global_position = player.global_position + Vector3(0.0, 18.0, 0.0)
 		if is_instance_valid(_stars):
 			_stars.global_position = player.global_position
 		if is_instance_valid(_milky_way):
 			_milky_way.global_position = player.global_position
 		if is_instance_valid(_snow_cover):
 			if weather_index == 4:
-				_snow_elapsed = minf(900.0, _snow_elapsed + delta)
+				_snow_elapsed = minf(900.0, _snow_elapsed + delta * lerpf(1.0, 0.7, _daylight_factor))
 			elif weather_index == 3:
-				_snow_elapsed = maxf(0.0, _snow_elapsed - delta * 0.025)
+				_snow_elapsed = maxf(0.0, _snow_elapsed - delta * 0.08)
+			elif _daylight_factor > 0.55:
+				_snow_elapsed = maxf(0.0, _snow_elapsed - delta * 0.035 * _daylight_factor)
 			var progress := clampf(_snow_elapsed / 900.0, 0.0, 1.0)
 			_snow_cover.visible = progress > 0.0 and player.global_position.length() > 24.0
 			_snow_cover.scale = Vector3(1.0, progress, 1.0)
@@ -177,15 +213,24 @@ func _build_weather_effects() -> void:
 	_cloud_material.emission = Color(0.10, 0.13, 0.19)
 	_cloud_material.emission_energy_multiplier = 0.35
 	_cloud_material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	var cloud_bank := MeshInstance3D.new()
-	cloud_bank.name = "CloudBank"
-	cloud_bank.mesh = _make_cloud_bank(30)
-	cloud_bank.material_override = _cloud_material
-	cloud_bank.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_clouds.add_child(cloud_bank)
+	_cloud_bank = MeshInstance3D.new()
+	_cloud_bank.name = "CloudBank"
+	_cloud_bank.mesh = _make_cloud_bank([8, 18, 30][clampi(GameSettings.weather_quality, 0, 2)])
+	_cloud_bank.material_override = _cloud_material
+	_cloud_bank.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_clouds.add_child(_cloud_bank)
 	_rain = _make_particles("Lluvia", 320, Vector3(0, -1, 0), 12.0, 20.0, 1.4, Vector3(0, -22, 0), Color(0.48, 0.62, 0.78, 0.42), Vector3(0.018, 0.42, 0.018))
 	_snow = _make_particles("Nieve", 180, Vector3(0, -1, 0), 1.0, 2.8, 4.0, Vector3(0, -0.7, 0), Color(0.82, 0.88, 0.95, 0.86), Vector3(0.07, 0.07, 0.07))
 	_wind = _make_particles("Hojas al viento", 90, Vector3(1, 0.12, 0), 4.0, 8.0, 2.8, Vector3(0, -0.3, 0), Color(0.48, 0.40, 0.29, 0.75), Vector3(0.07, 0.025, 0.035))
+	_lightning_light = OmniLight3D.new()
+	_lightning_light.name = "Relampago"
+	_lightning_light.light_color = Color(0.72, 0.82, 1.0)
+	_lightning_light.light_energy = 0.0
+	_lightning_light.omni_range = 110.0
+	_lightning_light.shadow_enabled = false
+	_lightning_light.visible = false
+	add_child(_lightning_light)
+	_applied_weather_quality = clampi(GameSettings.weather_quality, 0, 2)
 
 func _make_cloud_mass(seed_value: int) -> ArrayMesh:
 	var surface := SurfaceTool.new()
@@ -247,7 +292,7 @@ func _add_cloud_triangle(surface: SurfaceTool, a: Vector3, b: Vector3, c: Vector
 func _make_particles(label: String, amount: int, direction: Vector3, speed_min: float, speed_max: float, lifetime: float, gravity: Vector3, color: Color, size: Vector3) -> CPUParticles3D:
 	var particles := CPUParticles3D.new()
 	particles.name = label
-	particles.amount = amount
+	particles.amount = roundi(float(amount) * [0.35, 0.65, 1.0][clampi(GameSettings.weather_quality, 0, 2)])
 	particles.lifetime = lifetime
 	particles.emitting = false
 	particles.local_coords = true
@@ -270,12 +315,27 @@ func _make_particles(label: String, amount: int, direction: Vector3, speed_min: 
 	add_child(particles)
 	return particles
 
+func apply_weather_quality() -> void:
+	var quality := clampi(GameSettings.weather_quality, 0, 2)
+	if quality == _applied_weather_quality and is_instance_valid(_cloud_bank):
+		return
+	if is_instance_valid(_rain):
+		_rain.amount = roundi(320.0 * [0.35, 0.65, 1.0][quality])
+	if is_instance_valid(_snow):
+		_snow.amount = roundi(180.0 * [0.35, 0.65, 1.0][quality])
+	if is_instance_valid(_wind):
+		_wind.amount = roundi(90.0 * [0.35, 0.65, 1.0][quality])
+	if is_instance_valid(_cloud_bank):
+		_cloud_bank.mesh = _make_cloud_bank([8, 18, 30][quality])
+	_applied_weather_quality = quality
+
 func _apply_weather() -> void:
 	if not is_instance_valid(world_environment) or world_environment.environment == null:
 		return
 	if not is_instance_valid(_clouds) or not is_instance_valid(_rain) or not is_instance_valid(_snow) or not is_instance_valid(_wind) or _cloud_material == null:
 		return
 	var env := world_environment.environment
+	var daylight := clampf(_daylight_factor, 0.0, 1.0)
 	var is_cloudy := weather_index >= 2
 	_clouds.visible = is_cloudy
 	_rain.emitting = weather_index == 3
@@ -284,59 +344,100 @@ func _apply_weather() -> void:
 	_cloud_drift = 0.7 if weather_index == 2 else (2.0 if weather_index == 3 else (12.0 if weather_index == 5 else 0.2))
 	_clouds.scale = Vector3.ONE
 	if is_instance_valid(_stars):
-		_stars.visible = weather_index == 0 and _daylight_factor < 0.32
+		_stars.visible = weather_index == 0 and daylight < 0.32
 	if is_instance_valid(_milky_way):
-		_milky_way.visible = weather_index == 0 and _daylight_factor < 0.32
+		_milky_way.visible = weather_index == 0 and daylight < 0.32
 	env.fog_mode = Environment.FOG_MODE_DEPTH
-	env.fog_depth_begin = 40.0
-	env.fog_depth_end = 65.0
+	env.fog_depth_begin = 35.0
+	env.fog_depth_end = 320.0
 	env.fog_depth_curve = 1.15
-	env.fog_density = 0.22
-	env.fog_enabled = weather_index == 1 or weather_index == 3 or weather_index == 4
-	env.fog_light_color = Color(0.105, 0.13, 0.19)
-	env.fog_sky_affect = 0.15
+	env.fog_density = 0.12
+	env.fog_enabled = weather_index >= 1
+	env.fog_light_color = Color(0.075, 0.09, 0.14).lerp(Color(0.52, 0.56, 0.53), daylight)
+	env.fog_sky_affect = 0.12
 	_cloud_material.albedo_color = Color(0.10, 0.12, 0.17, 0.82)
+	_cloud_material.emission = Color(0.10, 0.13, 0.19)
+	_cloud_material.emission_energy_multiplier = 0.35
 	if weather_index == 1:
 		env.fog_depth_begin = 0.0
-		env.fog_depth_end = 15.0
-		env.fog_depth_curve = 1.0
-		env.fog_density = 1.0
-		env.fog_light_color = Color(0.055, 0.065, 0.085)
-		env.fog_sky_affect = 1.0
+		env.fog_depth_end = lerpf(23.0, 32.0, daylight)
+		env.fog_depth_curve = 1.15
+		env.fog_density = 0.38
+		env.fog_light_color = Color(0.12, 0.15, 0.20).lerp(Color(0.62, 0.65, 0.61), daylight)
+		env.fog_sky_affect = 0.72
 		_clouds.visible = false
 	elif weather_index == 2:
+		env.fog_enabled = true
+		env.fog_depth_begin = 95.0
 		env.fog_depth_end = 280.0
+		env.fog_density = 0.16
+		env.fog_light_color = Color(0.08, 0.10, 0.15).lerp(Color(0.48, 0.51, 0.50), daylight)
 		_cloud_material.albedo_color = Color(0.055, 0.065, 0.09, 0.94)
 		_cloud_material.emission = Color(0.09, 0.11, 0.16)
 		_cloud_material.emission_energy_multiplier = 0.48
 	elif weather_index == 3:
-		env.fog_depth_end = 115.0
+		env.fog_enabled = true
+		env.fog_depth_begin = 18.0
+		env.fog_depth_end = lerpf(96.0, 128.0, daylight)
+		env.fog_density = 0.2
+		env.fog_light_color = Color(0.045, 0.06, 0.09).lerp(Color(0.36, 0.42, 0.47), daylight)
 		_cloud_material.albedo_color = Color(0.04, 0.048, 0.065, 0.97)
 		_clouds.scale = Vector3(0.9, 0.9, 0.9)
 		_cloud_material.emission = Color(0.13, 0.15, 0.20)
 		_cloud_material.emission_energy_multiplier = 0.55
 	elif weather_index == 4:
-		env.fog_depth_begin = 20.0
-		env.fog_depth_end = 85.0
-		env.fog_depth_curve = 1.3
-		env.fog_light_color = Color(0.46, 0.50, 0.57)
+		env.fog_enabled = true
+		env.fog_depth_begin = 16.0
+		env.fog_depth_end = lerpf(92.0, 145.0, daylight)
+		env.fog_depth_curve = 1.2
+		env.fog_density = 0.16
+		env.fog_light_color = Color(0.28, 0.33, 0.43).lerp(Color(0.72, 0.76, 0.78), daylight)
 		_cloud_material.albedo_color = Color(0.22, 0.24, 0.29, 0.9)
 		_cloud_material.emission = Color(0.18, 0.20, 0.24)
 		_cloud_material.emission_energy_multiplier = 0.4
 	elif weather_index == 5:
-		env.fog_depth_end = 280.0
+		env.fog_enabled = true
+		env.fog_depth_begin = 75.0
+		env.fog_depth_end = 260.0
+		env.fog_density = 0.14
+		env.fog_light_color = Color(0.06, 0.08, 0.12).lerp(Color(0.46, 0.50, 0.50), daylight)
 		_cloud_material.albedo_color = Color(0.075, 0.085, 0.12, 0.87)
 		_cloud_material.emission = Color(0.08, 0.10, 0.15)
 		_cloud_material.emission_energy_multiplier = 0.36
+	var cloud_color := _cloud_material.albedo_color
+	var cloud_tint := Color(0.56, 0.61, 0.76).lerp(Color(1.0, 0.98, 0.92), daylight)
+	_cloud_material.albedo_color = Color(cloud_color.r * cloud_tint.r, cloud_color.g * cloud_tint.g, cloud_color.b * cloud_tint.b, cloud_color.a)
+	if env.sky and env.sky.sky_material is ProceduralSkyMaterial:
+		var sky_material := env.sky.sky_material as ProceduralSkyMaterial
+		var storm_strengths := [0.0, 0.05, 0.24, 0.52, 0.16, 0.3]
+		var storm_strength := float(storm_strengths[weather_index])
+		var storm_top := Color(0.008, 0.014, 0.03).lerp(Color(0.14, 0.19, 0.24), daylight)
+		var storm_horizon := Color(0.035, 0.045, 0.065).lerp(Color(0.32, 0.38, 0.40), daylight)
+		sky_material.sky_top_color = sky_material.sky_top_color.lerp(storm_top, storm_strength)
+		sky_material.sky_horizon_color = sky_material.sky_horizon_color.lerp(storm_horizon, storm_strength)
 	_apply_celestial_state()
 	if is_instance_valid(_weather_status):
-		_weather_status.text = "ACTUAL: " + WEATHER_NAMES[weather_index].to_upper()
+		_weather_status.text = "CLIMA: %s · %s" % [WEATHER_NAMES[weather_index].to_upper(), "AUTO" if _weather_auto else "MANUAL"]
 	for button_index in range(6):
 		var button := get_node_or_null("WeatherMenu/Panel/Margin/Content/WeatherButtons/Mode%d" % button_index) as Button
 		if button:
 			button.disabled = button_index == weather_index
 	for wind_material in _wind_materials:
 		wind_material.set_shader_parameter("wind_strength", 0.24 if weather_index == 5 else 0.035)
+
+func get_sunlight_multiplier() -> float:
+	match weather_index:
+		1:
+			return 0.78
+		2:
+			return 0.62
+		3:
+			return 0.42
+		4:
+			return 0.76
+		5:
+			return 0.55
+	return 1.0
 
 func _apply_celestial_state() -> void:
 	if is_instance_valid(moon_mesh):
@@ -353,11 +454,112 @@ func _apply_celestial_state() -> void:
 		var intensities := [0.12, 0.0, 0.09, 0.065, 0.05, 0.10]
 		moon_light.light_energy = float(intensities[weather_index]) * (1.0 - _daylight_factor)
 		moon_light.visible = moon_light.light_energy > 0.003
-		moon_light.shadow_enabled = weather_index != 1 and weather_index != 3 and weather_index != 4 and _daylight_factor < 0.7
+		var cast_moon_shadows := weather_index != 1 and weather_index != 3 and weather_index != 4 and _daylight_factor < 0.7
+		moon_light.set_meta("graphics_shadow_requested", cast_moon_shadows)
+		moon_light.shadow_enabled = cast_moon_shadows and GameSettings.shadow_quality > 0 and (GameSettings.shadow_quality > 1 or bool(moon_light.get_meta("graphics_shadow_low_priority", true)))
 
 func _set_weather(index: int) -> void:
+	_set_weather_mode(index, true)
+
+func _set_weather_mode(index: int, manual: bool) -> void:
 	weather_index = clampi(index, 0, WEATHER_NAMES.size() - 1)
+	if manual:
+		_weather_auto = false
+		_weather_auto_timer = 0.0
+		if is_instance_valid(_auto_weather_toggle):
+			_auto_weather_toggle.set_pressed_no_signal(false)
 	_apply_weather()
+
+func _on_clock_changed(hour: int, minute: int, _daylight: float, _phase: float) -> void:
+	if is_instance_valid(_time_status):
+		_time_status.text = "HORA DEL MUNDO · %02d:%02d" % [hour, minute]
+	_sync_clock_controls()
+
+func _sync_clock_controls() -> void:
+	if not is_instance_valid(world_clock):
+		return
+	if is_instance_valid(_time_slider):
+		_time_slider.set_value_no_signal(float(world_clock.get("phase")) * 24.0)
+	if is_instance_valid(_day_length_slider):
+		_day_length_slider.set_value_no_signal(float(world_clock.get("full_day_seconds")) / 60.0)
+	if is_instance_valid(_day_length_status):
+		_day_length_status.text = "DURACIÓN DEL DÍA · %.0f MIN" % (float(world_clock.get("full_day_seconds")) / 60.0)
+	if is_instance_valid(_cycle_toggle):
+		_cycle_toggle.set_pressed_no_signal(bool(world_clock.get("cycle_enabled")))
+	if is_instance_valid(_time_status):
+		_time_status.text = "HORA DEL MUNDO · %02d:%02d" % [int(world_clock.call("current_hour")), int(world_clock.call("current_minute"))]
+
+func _on_time_slider_changed(value: float) -> void:
+	if is_instance_valid(world_clock):
+		world_clock.call("set_hour", value)
+
+func _on_day_length_changed(value: float) -> void:
+	if is_instance_valid(world_clock):
+		world_clock.call("set_day_length_minutes", value)
+	if is_instance_valid(_day_length_status):
+		_day_length_status.text = "DURACIÓN DEL DÍA · %.0f MIN" % value
+
+func _on_cycle_toggled(enabled: bool) -> void:
+	if is_instance_valid(world_clock):
+		world_clock.call("set_cycle_enabled", enabled)
+
+func _on_auto_weather_toggled(enabled: bool) -> void:
+	_weather_auto = enabled
+	_weather_auto_timer = _weather_rng.randf_range(210.0, 390.0) if enabled else 0.0
+	_apply_weather()
+
+func _update_weather_automation(delta: float) -> void:
+	if not _weather_auto:
+		return
+	_weather_auto_timer -= delta
+	if _weather_auto_timer > 0.0:
+		return
+	var weights := [0.34, 0.09, 0.24, 0.18, 0.05, 0.10]
+	if _daylight_factor > 0.72:
+		weights[0] += 0.05
+		weights[1] = 0.04
+	elif _daylight_factor < 0.2:
+		weights[0] -= 0.05
+		weights[1] += 0.05
+	var roll := _weather_rng.randf()
+	var selected := 0
+	for index in range(weights.size()):
+		roll -= weights[index]
+		if roll <= 0.0:
+			selected = index
+			break
+	if selected == weather_index:
+		selected = (selected + 1 + _weather_rng.randi_range(0, WEATHER_NAMES.size() - 2)) % WEATHER_NAMES.size()
+	_set_weather_mode(selected, false)
+	_weather_auto_timer = _weather_rng.randf_range(210.0, 390.0)
+
+func _update_lightning(delta: float) -> void:
+	if weather_index != 3:
+		if is_instance_valid(_lightning_light):
+			_lightning_light.visible = false
+			_lightning_light.light_energy = 0.0
+		_lightning_flash_timer = 0.0
+		_thunder_delay = 0.0
+		return
+	if _lightning_flash_timer > 0.0:
+		_lightning_flash_timer = maxf(0.0, _lightning_flash_timer - delta)
+		if is_instance_valid(_lightning_light):
+			_lightning_light.light_energy = 4.8 * clampf(_lightning_flash_timer / 0.18, 0.0, 1.0)
+			_lightning_light.visible = _lightning_flash_timer > 0.0
+	if _thunder_delay > 0.0:
+		_thunder_delay = maxf(0.0, _thunder_delay - delta)
+		if _thunder_delay == 0.0 and is_instance_valid(player):
+			weather_event.emit(player.global_position, 115.0, "Un trueno distante reverbera entre los árboles.")
+	if _lightning_timer > 0.0:
+		_lightning_timer -= delta
+	else:
+		_lightning_timer = _weather_rng.randf_range(22.0, 48.0)
+		_lightning_flash_timer = 0.18
+		_thunder_delay = _weather_rng.randf_range(1.2, 3.5)
+		if is_instance_valid(_lightning_light) and is_instance_valid(player):
+			_lightning_light.global_position = player.global_position + Vector3(0.0, 18.0, 0.0)
+			_lightning_light.light_energy = 4.8
+			_lightning_light.visible = true
 
 func _build_weather_menu() -> void:
 	var layer := CanvasLayer.new()
@@ -366,9 +568,10 @@ func _build_weather_menu() -> void:
 	add_child(layer)
 	_weather_menu = PanelContainer.new()
 	_weather_menu.name = "Panel"
+	_weather_menu.theme = UIStyle.create_theme()
 	_weather_menu.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_weather_menu.position = Vector2(-270.0, 18.0)
-	_weather_menu.size = Vector2(250.0, 0.0)
+	_weather_menu.position = Vector2(-302.0, 12.0)
+	_weather_menu.size = Vector2(290.0, 0.0)
 	layer.add_child(_weather_menu)
 	var margin := MarginContainer.new()
 	margin.name = "Margin"
@@ -379,17 +582,54 @@ func _build_weather_menu() -> void:
 	_weather_menu.add_child(margin)
 	var content := VBoxContainer.new()
 	content.name = "Content"
-	content.add_theme_constant_override("separation", 7)
+	content.add_theme_constant_override("separation", 6)
 	margin.add_child(content)
 	var title := Label.new()
-	title.text = "PRUEBA DE CLIMA"
-	title.add_theme_font_size_override("font_size", 15)
+	title.text = "RELOJ Y CLIMA · DEBUG"
+	title.add_theme_color_override("font_color", UIStyle.ACCENT)
+	title.add_theme_font_size_override("font_size", 10)
 	content.add_child(title)
+	_time_status = Label.new()
+	_time_status.add_theme_color_override("font_color", UIStyle.AMBER)
+	content.add_child(_time_status)
+	_time_slider = HSlider.new()
+	_time_slider.min_value = 0.0
+	_time_slider.max_value = 23.99
+	_time_slider.step = 0.25
+	_time_slider.tooltip_text = "Cambiar la hora del mundo"
+	_time_slider.value_changed.connect(_on_time_slider_changed)
+	content.add_child(_time_slider)
+	_day_length_status = Label.new()
+	_day_length_status.add_theme_color_override("font_color", UIStyle.MUTED)
+	_day_length_status.add_theme_font_size_override("font_size", 7)
+	content.add_child(_day_length_status)
+	_day_length_slider = HSlider.new()
+	_day_length_slider.min_value = 1.0
+	_day_length_slider.max_value = 120.0
+	_day_length_slider.step = 1.0
+	_day_length_slider.tooltip_text = "Minutos reales por día de juego"
+	_day_length_slider.value_changed.connect(_on_day_length_changed)
+	content.add_child(_day_length_slider)
+	_cycle_toggle = CheckButton.new()
+	_cycle_toggle.text = "Ciclo día/noche activo"
+	_cycle_toggle.toggled.connect(_on_cycle_toggled)
+	content.add_child(_cycle_toggle)
+	_auto_weather_toggle = CheckButton.new()
+	_auto_weather_toggle.text = "Cambios de clima automáticos"
+	_auto_weather_toggle.toggled.connect(_on_auto_weather_toggled)
+	content.add_child(_auto_weather_toggle)
+	var climate_heading := Label.new()
+	climate_heading.text = "CONDICIONES ATMOSFÉRICAS"
+	climate_heading.add_theme_color_override("font_color", UIStyle.ACCENT)
+	climate_heading.add_theme_font_size_override("font_size", 8)
+	content.add_child(climate_heading)
 	_weather_status = Label.new()
+	_weather_status.add_theme_color_override("font_color", UIStyle.AMBER)
 	content.add_child(_weather_status)
 	var hint := Label.new()
-	hint.text = "1–6 elegir  ·  G siguiente  ·  F6 cerrar"
-	hint.add_theme_font_size_override("font_size", 11)
+	hint.text = "1–6 elegir  ·  G cambiar  ·  F6 cerrar"
+	hint.add_theme_color_override("font_color", UIStyle.MUTED)
+	hint.add_theme_font_size_override("font_size", 7)
 	content.add_child(hint)
 	var buttons := VBoxContainer.new()
 	buttons.name = "WeatherButtons"
@@ -400,9 +640,12 @@ func _build_weather_menu() -> void:
 		button.name = "Mode%d" % i
 		button.text = "%d  %s" % [i + 1, WEATHER_NAMES[i]]
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.custom_minimum_size.y = 25.0
+		button.add_theme_font_size_override("font_size", 8)
 		button.pressed.connect(_set_weather.bind(i))
 		buttons.add_child(button)
 	_weather_menu.visible = false
+	_sync_clock_controls()
 
 func _add_location_beacons(scene_root: Node) -> void:
 	if not (scene_root is Node3D):
@@ -510,6 +753,7 @@ func _make_detail_material() -> StandardMaterial3D:
 	return material
 
 func _prepare_tree_wind() -> void:
+	var wind_materials_by_source: Dictionary = {}
 	for canopy in _tree_canopies:
 		if not is_instance_valid(canopy) or not (canopy is MultiMeshInstance3D):
 			continue
@@ -520,6 +764,9 @@ func _prepare_tree_wind() -> void:
 		elif mesh_instance.multimesh and mesh_instance.multimesh.mesh and mesh_instance.multimesh.mesh.get_surface_count() > 0:
 			source_material = mesh_instance.multimesh.mesh.surface_get_material(0) as StandardMaterial3D
 		if source_material == null:
+			continue
+		if wind_materials_by_source.has(source_material):
+			mesh_instance.material_override = wind_materials_by_source[source_material]
 			continue
 		var shader := Shader.new()
 		shader.code = """
@@ -548,6 +795,7 @@ func _prepare_tree_wind() -> void:
 			material.set_shader_parameter("albedo_texture", source_material.albedo_texture)
 			material.set_shader_parameter("use_texture", true)
 		mesh_instance.material_override = material
+		wind_materials_by_source[source_material] = material
 		_wind_materials.append(material)
 
 func _build_starfield() -> MultiMeshInstance3D:

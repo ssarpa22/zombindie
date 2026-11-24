@@ -6,6 +6,7 @@ const DoorScript = preload("res://door.gd")
 const ForestWorldScript = preload("res://forest_world.gd")
 const WeatherSystemScript = preload("res://weather_system.gd")
 const GameSessionScript = preload("res://systems/game_session.gd")
+const EDITABLE_WORLD_PATH := "res://WorldEditable.tscn"
 var _world_environment: WorldEnvironment
 var _moon_light: DirectionalLight3D
 var _moon: MeshInstance3D
@@ -13,8 +14,39 @@ var _grain_texture: ImageTexture
 var _material_cache: Dictionary = {}
 var _flicker_lights: Array[OmniLight3D] = []
 var _flicker_clock := 0.0
+var _shadow_cull_clock := 0.0
 
 func _ready() -> void:
+	var bake_world := OS.get_cmdline_user_args().has("--bake-editable-world")
+	if bake_world or not ResourceLoader.exists(EDITABLE_WORLD_PATH):
+		_build_static_world()
+		if bake_world:
+			_bake_editable_world()
+			get_tree().quit()
+			return
+	else:
+		_load_editable_world()
+	var player: Node3D = get_node_or_null("Player") as Node3D
+	if player == null:
+		player = PlayerScene.instantiate() as Node3D
+		player.name = "Player"
+		player.position = Vector3(0, 0, 4)
+		add_child(player)
+	var weather_system: Node = get_node_or_null("WeatherSystem")
+	if weather_system == null:
+		weather_system = WeatherSystemScript.new()
+		weather_system.name = "WeatherSystem"
+		add_child(weather_system)
+	weather_system.configure(_world_environment, _moon_light, _moon, player)
+	var game_session: Node = get_node_or_null("GameSession")
+	if game_session == null:
+		game_session = GameSessionScript.new()
+		game_session.name = "GameSession"
+		add_child(game_session)
+	game_session.configure(player, weather_system, _world_environment, self)
+	GameSettings.apply_graphics_settings()
+
+func _build_static_world() -> void:
 	_grain_texture = _create_grain_texture()
 	_build_room()
 	_build_extension()
@@ -29,19 +61,80 @@ func _ready() -> void:
 	forest_world.name = "ForestWorld"
 	add_child(forest_world)
 	_build_lighting()
-	var player = PlayerScene.instantiate()
-	player.position = Vector3(0, 0, 4)
-	add_child(player)
 	_build_sign()
 	_add_hospital_locator()
-	var weather_system = WeatherSystemScript.new()
-	weather_system.name = "WeatherSystem"
-	add_child(weather_system)
-	weather_system.configure(_world_environment, _moon_light, _moon, player)
-	var game_session = GameSessionScript.new()
-	game_session.name = "GameSession"
-	add_child(game_session)
-	game_session.configure(player, weather_system, _world_environment, self)
+
+func _load_editable_world() -> void:
+	var editable_world := get_node_or_null("EditableWorld") as Node3D
+	if editable_world == null:
+		var packed_world := load(EDITABLE_WORLD_PATH) as PackedScene
+		if packed_world == null:
+			push_error("No se pudo cargar WorldEditable.tscn; generando el mundo de respaldo.")
+			_build_static_world()
+			return
+		editable_world = packed_world.instantiate() as Node3D
+		add_child(editable_world)
+	_world_environment = editable_world.find_child("WorldEnvironment", true, false) as WorldEnvironment
+	_moon_light = editable_world.find_child("Moonlight", true, false) as DirectionalLight3D
+	_moon = editable_world.find_child("FullMoon", true, false) as MeshInstance3D
+	_flicker_lights.clear()
+	for node in editable_world.find_children("*", "OmniLight3D", true, false):
+		if node.has_meta("base_energy"):
+			_flicker_lights.append(node as OmniLight3D)
+
+func _bake_editable_world() -> void:
+	var editable_world := Node3D.new()
+	editable_world.name = "EditableWorld"
+	add_child(editable_world)
+	var categories := {
+		"hospital": Node3D.new(),
+		"forest": Node3D.new(),
+		"exterior": Node3D.new(),
+		"lighting": Node3D.new()
+	}
+	categories["hospital"].name = "Hospital"
+	categories["forest"].name = "ForestAndWorldLayout"
+	categories["exterior"].name = "ExteriorAndLandmarks"
+	categories["lighting"].name = "LightingAndSky"
+	for category: Node3D in categories.values():
+		editable_world.add_child(category)
+		category.owner = editable_world
+	for child: Node in get_children().duplicate():
+		if child == editable_world:
+			continue
+		if child.name in ["EditableWorld", "Player", "WeatherSystem", "GameSession"]:
+			remove_child(child)
+			child.free()
+			continue
+		remove_child(child)
+		var category_key := _category_for_world_node(child)
+		categories[category_key].add_child(child)
+		child.owner = editable_world
+		_set_scene_owner_recursive(child, editable_world)
+	var packed := PackedScene.new()
+	var pack_error := packed.pack(editable_world)
+	if pack_error != OK:
+		push_error("No se pudo empaquetar WorldEditable.tscn: %s" % error_string(pack_error))
+		return
+	var save_error := ResourceSaver.save(packed, EDITABLE_WORLD_PATH)
+	if save_error != OK:
+		push_error("No se pudo guardar WorldEditable.tscn: %s" % error_string(save_error))
+	else:
+		print("Escena editable guardada en ", EDITABLE_WORLD_PATH)
+
+func _category_for_world_node(node: Node) -> String:
+	if node is WorldEnvironment or node is Light3D or node.name == "FullMoon":
+		return "lighting"
+	if node.name == "ForestWorld":
+		return "forest"
+	if node.name.begins_with("WorldLimit_") or node.name.begins_with("Tree") or node.name == "HospitalLocator":
+		return "exterior"
+	return "hospital"
+
+func _set_scene_owner_recursive(node: Node, scene_root: Node) -> void:
+	for child: Node in node.get_children():
+		child.owner = scene_root
+		_set_scene_owner_recursive(child, scene_root)
 
 func _process(delta: float) -> void:
 	_flicker_clock -= delta
@@ -50,6 +143,23 @@ func _process(delta: float) -> void:
 		for lamp in _flicker_lights:
 			var base_energy: float = lamp.get_meta("base_energy", 0.6)
 			lamp.light_energy = base_energy * (randf_range(0.04, 0.18) if randf() < 0.025 else randf_range(0.84, 1.0))
+	_shadow_cull_clock -= delta
+	if _shadow_cull_clock <= 0.0:
+		_shadow_cull_clock = 0.25
+		_update_fixture_shadow_visibility()
+
+func _update_fixture_shadow_visibility() -> void:
+	var camera := get_viewport().get_camera_3d()
+	for lamp in _flicker_lights:
+		var requested := bool(lamp.get_meta("graphics_shadow_requested", false))
+		var low_quality_shadow := bool(lamp.get_meta("graphics_shadow_low_priority", false))
+		var visible_to_camera := is_instance_valid(camera)
+		if visible_to_camera:
+			for plane: Plane in camera.get_frustum():
+				if plane.distance_to(lamp.global_position) < -lamp.omni_range:
+					visible_to_camera = false
+					break
+		lamp.shadow_enabled = GameSettings.shadow_quality > 0 and requested and visible_to_camera and (GameSettings.shadow_quality > 1 or low_quality_shadow)
 
 func _build_room() -> void:
 	# A small clinic wing built from simple, reusable box pieces.
@@ -127,16 +237,18 @@ func _build_lighting() -> void:
 	moon_light.rotation_degrees = Vector3(-28, -20, 0)
 	moon_light.light_color = Color(0.43, 0.51, 0.68)
 	moon_light.light_energy = 0.34
-	moon_light.shadow_enabled = true
+	moon_light.shadow_enabled = GameSettings.shadow_quality > 0
+	moon_light.set_meta("graphics_shadow_requested", true)
+	moon_light.set_meta("graphics_shadow_low_priority", true)
 	moon_light.directional_shadow_max_distance = 68.0
 	moon_light.light_cull_mask = 3
 	_moon_light = moon_light
 	add_child(moon_light)
-	_add_fixture_light(Vector3(0, 2.92, 1), Color(0.68, 0.72, 0.61), 0.62, 7.5, false)
-	_add_fixture_light(Vector3(-5.1, 2.88, 6.7), Color(0.62, 0.68, 0.58), 0.43, 5.0, false)
-	_add_fixture_light(Vector3(5.1, 2.88, -7.4), Color(0.58, 0.66, 0.73), 0.48, 5.5, false)
-	_add_fixture_light(Vector3(0, 2.92, -17), Color(0.54, 0.61, 0.68), 0.5, 8.0, false)
-	_add_fixture_light(Vector3(0, 6.15, -17), Color(0.5, 0.57, 0.64), 0.36, 6.0, false)
+	_add_fixture_light(Vector3(0, 2.92, 1), Color(0.68, 0.72, 0.61), 0.62, 7.5, true, true)
+	_add_fixture_light(Vector3(-5.1, 2.88, 6.7), Color(0.62, 0.68, 0.58), 0.43, 5.0, true)
+	_add_fixture_light(Vector3(5.1, 2.88, -7.4), Color(0.58, 0.66, 0.73), 0.48, 5.5, true)
+	_add_fixture_light(Vector3(0, 2.92, -17), Color(0.54, 0.61, 0.68), 0.5, 8.0, true)
+	_add_fixture_light(Vector3(0, 6.15, -17), Color(0.5, 0.57, 0.64), 0.36, 6.0, true, true)
 
 func _build_exterior() -> void:
 	var rng = RandomNumberGenerator.new()
@@ -274,6 +386,7 @@ func _add_upper_window(x_position: float, z_position: float, window_name: String
 	_add_box(window_name + "Header", Vector3(x_position, 6.05, z_position), Vector3(0.36, 0.9, 2.4), frame_color)
 	_add_box(window_name + "JambA", Vector3(x_position, 4.83, z_position - 1.16), Vector3(0.36, 1.5, 0.12), frame_color)
 	_add_box(window_name + "JambB", Vector3(x_position, 4.83, z_position + 1.16), Vector3(0.36, 1.5, 0.12), frame_color)
+	_add_box(window_name + "Crossbar", Vector3(x_position, 4.84, z_position), Vector3(0.1, 0.08, 2.18), frame_color)
 	_add_glass(window_name + "Pane", Vector3(x_position, 4.84, z_position), Vector3(0.035, 1.48, 2.18), Color(0.12, 0.19, 0.27, 0.28))
 	_add_box(window_name + "Mullion", Vector3(x_position, 4.83, z_position), Vector3(0.08, 1.5, 0.07), frame_color)
 
@@ -290,28 +403,36 @@ func _add_upper_railing(x_position: float) -> void:
 		_add_box("RailingPost", Vector3(x_position, 3.85, z_position), Vector3(0.09, 1.2, 0.09), Color(0.26, 0.30, 0.27))
 
 func _build_staircase() -> void:
-	var step_count := 16
-	var step_rise := 3.2 / float(step_count)
-	var step_run := 5.8 / float(step_count)
-	var start_z := -15.2
+	var step_count := 20
+	var stair_run := 7.8
+	var stair_bottom := 0.04
+	var stair_top := 3.325
+	var stair_rise := stair_top - stair_bottom
+	var step_rise := stair_rise / float(step_count)
+	var step_run := stair_run / float(step_count)
+	var start_z := -13.6
 	for index in range(step_count):
-		var top_y = (index + 1) * step_rise
+		var top_y := stair_bottom + (index + 1) * step_rise
 		var step_z = start_z - (index + 0.5) * step_run
-		_add_visual_box("StairTread", Vector3(0, top_y - 0.045, step_z), Vector3(1.48, 0.09, step_run + 0.025), Color(0.3, 0.28, 0.23), 1)
-		_add_visual_box("StairRiser", Vector3(0, top_y - step_rise * 0.5, start_z - (index + 1) * step_run), Vector3(1.48, step_rise, 0.07), Color(0.22, 0.22, 0.19), 1)
+		_add_visual_box("StairTread", Vector3(0, top_y - 0.06, step_z), Vector3(1.46, 0.12, step_run + 0.035), Color(0.3, 0.28, 0.23), 1)
+		_add_visual_box("StairRiser", Vector3(0, top_y - step_rise * 0.5, start_z - (index + 1) * step_run), Vector3(1.46, step_rise, 0.08), Color(0.22, 0.22, 0.19), 1)
+	var incline := atan(stair_rise / stair_run)
+	var ramp_length := Vector2(stair_run, stair_rise).length()
+	var ramp_thickness := 0.06
+	var ramp_center_y := (stair_bottom + stair_top) * 0.5 - ramp_thickness * cos(incline) * 0.5
 	var ramp_body = StaticBody3D.new()
-	ramp_body.name = "InvisibleWalkableStairRamp"
-	ramp_body.position = Vector3(0, 1.6, -18.1)
-	ramp_body.rotation.x = atan(3.2 / 5.8)
+	ramp_body.name = "WalkableStairRamp"
+	ramp_body.position = Vector3(0, ramp_center_y, start_z - stair_run * 0.5)
+	ramp_body.rotation.x = incline
 	var ramp_collision = CollisionShape3D.new()
 	var ramp_shape = BoxShape3D.new()
-	ramp_shape.size = Vector3(1.28, 0.035, 6.625)
+	ramp_shape.size = Vector3(1.4, ramp_thickness, ramp_length + 0.1)
 	ramp_collision.shape = ramp_shape
 	ramp_body.add_child(ramp_collision)
 	add_child(ramp_body)
-	var incline := atan(3.2 / 5.8)
-	_add_rotated_box("StairHandrailLeft", Vector3(-0.91, 2.35, -18.1), Vector3(0.08, 0.08, 6.625), incline, Color(0.26, 0.28, 0.25))
-	_add_rotated_box("StairHandrailRight", Vector3(0.91, 2.35, -18.1), Vector3(0.08, 0.08, 6.625), incline, Color(0.26, 0.28, 0.25))
+	var stair_center_z := start_z - stair_run * 0.5
+	_add_rotated_box("StairHandrailLeft", Vector3(-0.91, ramp_center_y + 0.75, stair_center_z), Vector3(0.08, 0.08, ramp_length), incline, Color(0.26, 0.28, 0.25))
+	_add_rotated_box("StairHandrailRight", Vector3(0.91, ramp_center_y + 0.75, stair_center_z), Vector3(0.08, 0.08, ramp_length), incline, Color(0.26, 0.28, 0.25))
 
 func _add_rotated_box(box_name: String, box_position: Vector3, box_size: Vector3, rotation_x: float, color: Color) -> void:
 	var body = StaticBody3D.new()
@@ -413,6 +534,11 @@ func _add_door(door_name: String, hinge_position: Vector3, yaw: float, door_widt
 	leaf_material.uv1_scale = Vector3(2, 2, 1)
 	leaf.material_override = leaf_material
 	door.add_child(leaf)
+	for side in [-1.0, 1.0]:
+		_add_door_panel(door, Vector3(door_width * 0.5, 0.62, side * 0.057), Vector3(door_width * 0.72, 0.72, 0.018), Color(0.13, 0.19, 0.18))
+		_add_door_panel(door, Vector3(door_width * 0.5, 2.37, side * 0.057), Vector3(door_width * 0.72, 0.34, 0.018), Color(0.13, 0.19, 0.18))
+		for hinge_y in [0.42, 1.3, 2.18]:
+			_add_door_panel(door, Vector3(0.055, hinge_y, side * 0.06), Vector3(0.12, 0.08, 0.02), Color(0.42, 0.38, 0.28))
 	var collision = CollisionShape3D.new()
 	collision.position = Vector3(door_width * 0.5, 1.3, 0)
 	var shape = BoxShape3D.new()
@@ -440,14 +566,23 @@ func _add_door(door_name: String, hinge_position: Vector3, yaw: float, door_widt
 	handle.mesh = handle_mesh
 	handle.material_override = _make_material(Color(0.57, 0.48, 0.3))
 	door.add_child(handle)
+	var rear_handle := MeshInstance3D.new()
+	rear_handle.name = "RearHandle"
+	rear_handle.position = Vector3(door_width * 0.88, 1.15, -0.08)
+	rear_handle.mesh = handle_mesh
+	rear_handle.material_override = handle.material_override
+	door.add_child(rear_handle)
 	add_child(door)
-	var label = Label3D.new()
-	label.text = "E  ABRIR / CERRAR"
-	label.position = hinge_position + Vector3(0, 2.92, 0)
-	label.font_size = 22
-	label.pixel_size = 0.004
-	label.modulate = Color(0.64, 0.69, 0.61, 0.72)
-	add_child(label)
+	_add_two_sided_label("E  ABRIR / CERRAR", hinge_position + Vector3(0, 2.92, 0), 22, 0.004, Color(0.64, 0.69, 0.61, 0.72))
+
+func _add_door_panel(parent: Node3D, panel_position: Vector3, panel_size: Vector3, color: Color) -> void:
+	var panel := MeshInstance3D.new()
+	panel.position = panel_position
+	var mesh := BoxMesh.new()
+	mesh.size = panel_size
+	panel.mesh = mesh
+	panel.material_override = _make_material(color)
+	parent.add_child(panel)
 
 func _build_detail_pass() -> void:
 	# Scuffed wall protection, exposed pipework and small traces of the evacuation.
@@ -489,14 +624,16 @@ func _add_fluorescent_fixture(fixture_position: Vector3, color: Color) -> void:
 	fixture.material_override = fixture_material
 	add_child(fixture)
 
-func _add_fixture_light(light_position: Vector3, color: Color, energy: float, radius: float, shadows: bool) -> void:
+func _add_fixture_light(light_position: Vector3, color: Color, energy: float, radius: float, shadows: bool, low_quality_shadow: bool = false) -> void:
 	var lamp = OmniLight3D.new()
 	lamp.name = "FlickeringFluorescent"
 	lamp.position = light_position
 	lamp.light_color = color
 	lamp.light_energy = energy
 	lamp.omni_range = radius
-	lamp.shadow_enabled = shadows
+	lamp.shadow_enabled = shadows and GameSettings.shadow_quality > 0
+	lamp.set_meta("graphics_shadow_requested", shadows)
+	lamp.set_meta("graphics_shadow_low_priority", low_quality_shadow)
 	lamp.set_meta("base_energy", energy)
 	_flicker_lights.append(lamp)
 	add_child(lamp)
@@ -519,15 +656,17 @@ func _add_stain(stain_position: Vector3, stain_scale: Vector3, color: Color) -> 
 	add_child(stain)
 
 func _create_grain_texture() -> ImageTexture:
-	var image = Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	var texture_size: int = [16, 32, 64][clampi(GameSettings.texture_quality, 0, 2)]
+	var image = Image.create(texture_size, texture_size, false, Image.FORMAT_RGBA8)
 	var rng = RandomNumberGenerator.new()
 	rng.seed = 81273
-	for y in range(32):
-		for x in range(32):
+	for y in range(texture_size):
+		for x in range(texture_size):
 			var value = rng.randf_range(0.86, 1.0)
 			if rng.randf() < 0.025:
 				value *= rng.randf_range(0.62, 0.82)
 			image.set_pixel(x, y, Color(value, value, value, 1.0))
+	image.generate_mipmaps()
 	return ImageTexture.create_from_image(image)
 
 func _build_side_wall(x_position: float, wall_name: String) -> void:
@@ -545,13 +684,16 @@ func _add_window(x_position: float, z_position: float, window_name: String) -> v
 	_add_box(window_name + "Header", Vector3(x_position, 2.65, z_position), Vector3(0.36, 0.9, 2.8), frame_color)
 	_add_box(window_name + "JambA", Vector3(x_position, 1.6, z_position - 1.36), Vector3(0.36, 1.5, 0.12), frame_color)
 	_add_box(window_name + "JambB", Vector3(x_position, 1.6, z_position + 1.36), Vector3(0.36, 1.5, 0.12), frame_color)
+	_add_box(window_name + "Crossbar", Vector3(x_position, 1.61, z_position), Vector3(0.1, 0.08, 2.58), frame_color)
 	_add_glass(window_name + "Pane", Vector3(x_position, 1.61, z_position), Vector3(0.035, 1.12, 2.58), pane_color)
 	_add_box(window_name + "Mullion", Vector3(x_position, 1.6, z_position), Vector3(0.08, 1.15, 0.07), frame_color)
 
 func _add_glass(glass_name: String, glass_position: Vector3, glass_size: Vector3, color: Color) -> void:
+	var body := StaticBody3D.new()
+	body.name = glass_name
+	body.position = glass_position
 	var pane = MeshInstance3D.new()
-	pane.name = glass_name
-	pane.position = glass_position
+	pane.name = "GlassSurface"
 	var mesh = BoxMesh.new()
 	mesh.size = glass_size
 	pane.mesh = mesh
@@ -561,14 +703,21 @@ func _add_glass(glass_name: String, glass_position: Vector3, glass_size: Vector3
 	material.roughness = 0.35
 	pane.material_override = material
 	pane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(pane)
+	body.add_child(pane)
+	var collision := CollisionShape3D.new()
+	var collision_box := BoxShape3D.new()
+	collision_box.size = Vector3(maxf(glass_size.x, 0.08), glass_size.y, glass_size.z)
+	collision.shape = collision_box
+	body.add_child(collision)
+	add_child(body)
 
 func _add_tree(tree_position: Vector3, tree_height: float, tree_scale: float) -> void:
+	var mesh_segments := 3 + clampi(GameSettings.mesh_quality, 0, 2)
 	var trunk_mesh = CylinderMesh.new()
 	trunk_mesh.top_radius = 0.16 * tree_scale
 	trunk_mesh.bottom_radius = 0.36 * tree_scale
 	trunk_mesh.height = tree_height
-	trunk_mesh.radial_segments = 5
+	trunk_mesh.radial_segments = mesh_segments
 	var trunk = MeshInstance3D.new()
 	trunk.name = "PineTrunk"
 	trunk.mesh = trunk_mesh
@@ -581,7 +730,7 @@ func _add_tree(tree_position: Vector3, tree_height: float, tree_scale: float) ->
 		foliage_mesh.top_radius = 0.0
 		foliage_mesh.bottom_radius = (1.9 - tier * 0.48) * tree_scale
 		foliage_mesh.height = tree_height * 0.43
-		foliage_mesh.radial_segments = 5
+		foliage_mesh.radial_segments = mesh_segments
 		var foliage = MeshInstance3D.new()
 		foliage.name = "PineCanopy"
 		foliage.mesh = foliage_mesh
@@ -594,8 +743,9 @@ func _add_moon(moon_position: Vector3) -> void:
 	var moon_mesh = SphereMesh.new()
 	moon_mesh.radius = 2.2
 	moon_mesh.height = 4.4
-	moon_mesh.radial_segments = 12
-	moon_mesh.rings = 6
+	var mesh_segments := 3 + clampi(GameSettings.mesh_quality, 0, 2)
+	moon_mesh.radial_segments = 6 + mesh_segments
+	moon_mesh.rings = mesh_segments
 	var moon = MeshInstance3D.new()
 	moon.name = "FullMoon"
 	moon.mesh = moon_mesh
@@ -640,13 +790,18 @@ func _get_surface_material(color: Color, use_grain: bool) -> StandardMaterial3D:
 	return material
 
 func _build_sign() -> void:
-	var label = Label3D.new()
-	label.text = "SALIDA DE EMERGENCIA"
-	label.position = Vector3(0, 2.35, 11.34)
-	label.font_size = 36
-	label.modulate = Color(0.72, 0.16, 0.12)
-	label.pixel_size = 0.006
-	add_child(label)
+	_add_two_sided_label("SALIDA DE EMERGENCIA", Vector3(0, 2.35, 11.34), 36, 0.006, Color(0.72, 0.16, 0.12))
+
+func _add_two_sided_label(label_text: String, label_position: Vector3, font_size: int, pixel_size: float, color: Color) -> void:
+	for side in range(2):
+		var label := Label3D.new()
+		label.text = label_text
+		label.position = label_position + Vector3(0.0, 0.0, 0.004 * side)
+		label.rotation.y = PI * side
+		label.font_size = font_size
+		label.pixel_size = pixel_size
+		label.modulate = color
+		add_child(label)
 
 func _add_box(box_name: String, box_position: Vector3, box_size: Vector3, color: Color) -> void:
 	if is_equal_approx(box_size.y, 3.0):

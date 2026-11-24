@@ -1,7 +1,22 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://WorldEditable.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="3_player"]
+[ext_resource type="Script" path="res://weather_system.gd" id="4_weather"]
+[ext_resource type="Script" path="res://systems/game_session.gd" id="5_session"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
+
+[node name="EditableWorld" parent="." instance=ExtResource("2_world")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector3(0, 0, 4)
+
+[node name="WeatherSystem" type="Node3D" parent="."]
+script = ExtResource("4_weather")
+
+[node name="GameSession" type="Node" parent="."]
+script = ExtResource("5_session")
 

@@ -36,13 +36,6 @@ func _ready() -> void:
 	head.position.y = 1.72
 	head.material_override = clothes
 	add_child(head)
-	var marker := Label3D.new()
-	marker.text = "ELENA · COMERCIANTE  [E]"
-	marker.position.y = 2.1
-	marker.font_size = 17
-	marker.pixel_size = 0.004
-	marker.modulate = Color(0.72, 0.78, 0.68)
-	add_child(marker)
 
 func _process(delta: float) -> void:
 	_elapsed += delta

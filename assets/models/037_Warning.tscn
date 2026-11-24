@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cix00"]
+albedo_color = Color(0.64, 0.48, 0.17, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_xdtlp"]
+size = Vector3(0.9, 0.8, 0.08)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cj2ir"]
+size = Vector3(0.9, 0.8, 0.08)
+
+[node name="037_Warning_Sign" type="StaticBody3D" unique_id=1682656668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=636291761]
+material_override = SubResource("StandardMaterial3D_cix00")
+mesh = SubResource("BoxMesh_xdtlp")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1920435547]
+shape = SubResource("BoxShape3D_cj2ir")

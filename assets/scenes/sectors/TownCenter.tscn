@@ -1,0 +1,86 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
+
+[node name="TownCenter" type="Node3D" parent="."]
+asset_key = "town_center"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_CornerStore.tscn" id="store"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Restaurant.tscn" id="restaurant"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Motel.tscn" id="motel"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Cottage.tscn" id="cottage"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SmallHome.tscn" id="home"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Bench.tscn" id="bench"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_PhoneBooth.tscn" id="phone"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_TrashBin.tscn" id="trash"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Abandoned_Vehicle_Car.tscn" id="car"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_Directional.tscn" id="sign"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Tree_Pine.tscn" id="pine"]
+
+[sub_resource type="BoxMesh" id="TownStreetMesh"]
+size = Vector3(72, 0.06, 5.4)
+
+[sub_resource type="BoxShape3D" id="TownStreetCollision"]
+size = Vector3(72, 0.06, 5.4)
+
+[sub_resource type="StandardMaterial3D" id="TownStreetMaterial"]
+albedo_color = Color(0.19, 0.18, 0.15, 1)
+roughness = 1.0
+
+[node name="TownCenter" type="Node3D"]
+
+[node name="CrossStreet" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.035, 0)
+
+[node name="RoadSurface" type="MeshInstance3D" parent="CrossStreet"]
+mesh = SubResource("TownStreetMesh")
+material_override = SubResource("TownStreetMaterial")
+
+[node name="RoadCollision" type="CollisionShape3D" parent="CrossStreet"]
+shape = SubResource("TownStreetCollision")
+
+[node name="CornerStore" parent="." instance=ExtResource("store")]
+position = Vector3(-19, 0, 13)
+
+[node name="Restaurant" parent="." instance=ExtResource("restaurant")]
+position = Vector3(18, 0, -14)
+rotation = Vector3(0, 3.141593, 0)
+
+[node name="Motel" parent="." instance=ExtResource("motel")]
+position = Vector3(-30, 0, -24)
+rotation = Vector3(0, 3.141593, 0)
+
+[node name="Cottage_South" parent="." instance=ExtResource("cottage")]
+position = Vector3(31, 0, 22)
+
+[node name="SmallHome_North" parent="." instance=ExtResource("home")]
+position = Vector3(-4, 0, -31)
+rotation = Vector3(0, 3.141593, 0)
+
+[node name="Bench_West" parent="." instance=ExtResource("bench")]
+position = Vector3(-9, 0, 6)
+
+[node name="Bench_East" parent="." instance=ExtResource("bench")]
+position = Vector3(10, 0, -6)
+
+[node name="PhoneBooth" parent="." instance=ExtResource("phone")]
+position = Vector3(-13, 0, 7)
+
+[node name="TrashBin" parent="." instance=ExtResource("trash")]
+position = Vector3(14, 0, -7)
+
+[node name="DirectionalSign" parent="." instance=ExtResource("sign")]
+position = Vector3(-8, 0, 8)
+
+[node name="AbandonedCar" parent="." instance=ExtResource("car")]
+position = Vector3(27, 0, 10)
+rotation = Vector3(0, -0.08, 0)
+
+[node name="Pine_EdgeWest" parent="." instance=ExtResource("pine")]
+position = Vector3(-43, 0, 33)
+
+[node name="Pine_EdgeEast" parent="." instance=ExtResource("pine")]
+position = Vector3(43, 0, -34)

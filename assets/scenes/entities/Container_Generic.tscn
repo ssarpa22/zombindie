@@ -1,6 +1,8 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/entities/container_generic.gd" id="1_container_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="ContainerRoot" type="StaticBody3D"]
-script = ExtResource("1_container_script")
+[node name="Container_Generic" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Container_Generic"
+interaction_action = "open_container"

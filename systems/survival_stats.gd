@@ -14,7 +14,7 @@ var is_dead := false
 var _emit_clock := 0.0
 var difficulty_multiplier := 1.0
 
-func tick(delta: float, sprinting: bool, weather: int, outdoors: bool) -> void:
+func tick(delta: float, sprinting: bool, weather: int, outdoors: bool, daylight: float = 0.0) -> void:
 	if is_dead:
 		return
 	hunger = maxf(0.0, hunger - delta * 0.035 * difficulty_multiplier)
@@ -22,14 +22,23 @@ func tick(delta: float, sprinting: bool, weather: int, outdoors: bool) -> void:
 	if not sprinting:
 		stamina = minf(100.0, stamina + delta * 10.0)
 	if outdoors:
-		var cooling := 0.0
-		if weather == 3:
-			cooling = 0.008
-		elif weather == 4:
-			cooling = 0.018
-		elif weather == 5:
-			cooling = 0.012
-		body_temperature = maxf(30.0, body_temperature - delta * cooling)
+		var night_factor := 1.0 - clampf(daylight, 0.0, 1.0)
+		var cooling := 0.00025
+		match weather:
+			1:
+				cooling = lerpf(0.00035, 0.0007, night_factor)
+			2:
+				cooling = lerpf(0.0003, 0.0006, night_factor)
+			3:
+				cooling = lerpf(0.00065, 0.0014, night_factor)
+			4:
+				cooling = lerpf(0.0013, 0.002, night_factor)
+			5:
+				cooling = lerpf(0.00075, 0.0016, night_factor)
+		if weather == 0 and daylight > 0.7:
+			body_temperature = minf(36.8, body_temperature + delta * 0.0002)
+		else:
+			body_temperature = maxf(30.0, body_temperature - delta * cooling)
 	else:
 		body_temperature = minf(36.8, body_temperature + delta * 0.012)
 	if hunger <= 0.0:

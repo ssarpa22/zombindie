@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_t6jqj"]
+size = Vector3(4, 2.2, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0w14w"]
+size = Vector3(0.16, 2.35, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jqmji"]
+size = Vector3(0.16, 2.35, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4g41h"]
+size = Vector3(0.16, 2.35, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tjbyc"]
+size = Vector3(3.9, 2.2, 0.16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ya15"]
+size = Vector3(4, 2.2, 0.22)
+
+[node name="022_Rusted_Chainlink_Fence" type="StaticBody3D" unique_id=744004446]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 36)
+metadata/asset_category = "01_Roads_And_Fences"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=523337532]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_t6jqj")
+
+[node name="Post_-2_0" type="MeshInstance3D" parent="." unique_id=1109745494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_0w14w")
+
+[node name="Post_0_0" type="MeshInstance3D" parent="." unique_id=1125932671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_jqmji")
+
+[node name="Post_2_0" type="MeshInstance3D" parent="." unique_id=408875329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_4g41h")
+
+[node name="Wall_Panel" type="MeshInstance3D" parent="." unique_id=2139844284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_tjbyc")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=783780710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("BoxShape3D_7ya15")

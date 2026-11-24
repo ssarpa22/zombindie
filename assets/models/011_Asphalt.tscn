@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwkwo"]
+albedo_color = Color(0.105, 0.115, 0.112, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_v65vw"]
+size = Vector3(12, 0.18, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hccb6"]
+size = Vector3(12, 0.18, 8)
+
+[node name="011_Asphalt_Road_Straight_12m" type="StaticBody3D" unique_id=645241153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 18)
+metadata/asset_category = "01_Roads_And_Fences"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1764953326]
+material_override = SubResource("StandardMaterial3D_cwkwo")
+mesh = SubResource("BoxMesh_v65vw")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=384176168]
+shape = SubResource("BoxShape3D_hccb6")

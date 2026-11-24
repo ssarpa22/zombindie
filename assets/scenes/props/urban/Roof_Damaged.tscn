@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/roof_damaged.gd" id="1_roof_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="RoofBody" type="StaticBody3D"]
-script = ExtResource("1_roof_script")
+[node name="Roof_Damaged" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Roof_Damaged"

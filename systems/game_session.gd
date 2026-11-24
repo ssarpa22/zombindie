@@ -13,6 +13,9 @@ const ZombieScript = preload("res://entities/zombie_actor.gd")
 const LootScript = preload("res://entities/loot_pickup.gd")
 const TraderScript = preload("res://entities/trader_npc.gd")
 const GuideScript = preload("res://ui/game_guide.gd")
+const RestSpotScript = preload("res://entities/rest_spot.gd")
+const WorldDocumentScript = preload("res://entities/world_document.gd")
+const ZOMBIES_ENABLED := false
 
 var player: CharacterBody3D
 var weather_system: Node
@@ -72,6 +75,10 @@ func _build_services() -> void:
 	world_clock.name = "WorldClock"
 	add_child(world_clock)
 	world_clock.configure(environment_node, weather_system)
+	if is_instance_valid(weather_system) and weather_system.has_method("bind_world_clock"):
+		weather_system.call("bind_world_clock", world_clock)
+		if weather_system.has_signal("weather_event"):
+			weather_system.connect("weather_event", _on_weather_event)
 	save_service = SaveServiceScript.new()
 	save_service.name = "SaveService"
 	add_child(save_service)
@@ -105,6 +112,26 @@ func _spawn_initial_entities() -> void:
 	_spawn_loot("medical_kit", 1, Vector3(3.1, 0.0, -19.0))
 	_spawn_loot("wood_plank", 3, Vector3(6.0, 0.0, 224.0))
 	_spawn_loot("scrap_metal", 1, Vector3(-5.5, 0.0, 225.0))
+	_spawn_rest_spot(Vector3(4.5, 0.0, -7.5), "Descansar en la cama")
+	_spawn_rest_spot(Vector3(1.4, 0.0, 220.0), "Descansar en el puesto")
+	_spawn_document(
+		"ReceptionLog",
+		Vector3(-5.5, 0.55, 6.8),
+		"Registro de guardia",
+		"Último turno, 22:10:\nDos pacientes llegaron con mordeduras selladas. Uno intentó atacar al personal. El generador sigue vivo, pero la reserva es mínima.\n\nNadie respondió desde la comisaría."
+	)
+	_spawn_document(
+		"PoliceRadioLog",
+		Vector3(1.4, 0.55, 226.0),
+		"Última transmisión",
+		"Los caminos al norte siguen bloqueados. La clínica puede verse desde la torre si la ruta permanece despejada.\n\nCódigo de evacuación: reunirse en el puesto, llevar botiquín y no abrir la puerta trasera."
+	)
+	_spawn_document(
+		"DoctorMemo",
+		Vector3(-5.5, 0.5, -7.5),
+		"Nota del doctor",
+		"Las infecciones avanzan con fiebre y desorientación. Mantener hidratación, vendar las heridas y evitar correr largas distancias.\n\nEl botiquín fue llevado a la sala de consulta norte."
+	)
 	_spawn_zombie(Vector3(0.0, 0.0, -8.4), 0.9)
 	_spawn_zombie(Vector3(8.0, 0.0, 42.0), 1.15, "runner")
 	var trader := TraderScript.new()
@@ -119,7 +146,23 @@ func _spawn_loot(item_id: String, amount: int, position: Vector3) -> void:
 	pickup.position = position
 	world_root.add_child(pickup)
 
+func _spawn_rest_spot(position: Vector3, interaction_name: String) -> void:
+	var rest_spot := RestSpotScript.new()
+	rest_spot.name = "RestSpot_" + str(world_root.get_child_count())
+	rest_spot.configure(self, interaction_name)
+	rest_spot.position = position
+	world_root.add_child(rest_spot)
+
+func _spawn_document(document_name: String, position: Vector3, title: String, content: String) -> void:
+	var document := WorldDocumentScript.new()
+	document.name = document_name
+	document.configure(self, title, content)
+	document.position = position
+	world_root.add_child(document)
+
 func _spawn_zombie(position: Vector3, scale_factor: float, infected_type: String = "walker") -> void:
+	if not ZOMBIES_ENABLED:
+		return
 	var zombie := ZombieScript.new()
 	zombie.name = "InfectadoErrante"
 	zombie.position = position
@@ -131,7 +174,7 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(player) or not is_instance_valid(survival):
 		return
 	var weather_index := int(weather_system.get("weather_index")) if is_instance_valid(weather_system) else 0
-	survival.tick(delta, player.is_sprinting(), weather_index, world.is_outdoors())
+	survival.tick(delta, player.is_sprinting(), weather_index, world.is_outdoors(), world_clock.daylight_factor)
 	world_clock.tick(delta)
 	_event_timer -= delta
 	if _event_timer <= 0.0:
@@ -193,6 +236,10 @@ func emit_noise(position: Vector3, radius: float, noise_kind: String) -> void:
 		if is_instance_valid(zombie) and zombie.global_position.distance_to(position) <= radius:
 			zombie.hear_noise(position, noise_kind)
 
+func _on_weather_event(event_position: Vector3, radius: float, message: String) -> void:
+	emit_noise(event_position, radius, "trueno")
+	notify(message)
+
 func on_zombie_killed(zombie: Node) -> void:
 	quests.on_zombie_killed()
 	progression.add_experience(25, "combat")
@@ -215,6 +262,24 @@ func trade_with_survivor() -> bool:
 	notify("Intercambio hecho · reputación +3")
 	return true
 
+func rest_at(rest_spot: Node) -> void:
+	if not is_instance_valid(player) or not is_instance_valid(survival):
+		return
+	survival.stamina = minf(100.0, survival.stamina + 42.0)
+	survival.hunger = maxf(0.0, survival.hunger - 1.5)
+	survival.thirst = maxf(0.0, survival.thirst - 2.5)
+	survival.wound_level = maxf(0.0, survival.wound_level - 8.0)
+	survival.infection = maxf(0.0, survival.infection - 2.0)
+	survival.body_temperature = minf(36.8, survival.body_temperature + 0.6)
+	survival.changed.emit()
+	progression.add_experience(2, "survival")
+	notify("Descansaste. Aguante: %.0f · Heridas: %.0f" % [survival.stamina, survival.wound_level])
+	world_clock.tick(480.0)
+
+func read_document(document_id: String, document_title: String, document_text: String) -> void:
+	if is_instance_valid(hud):
+		hud.show_document(document_id, document_title, document_text)
+
 func _on_item_added(item_id: String, amount: int) -> void:
 	quests.on_item_collected(item_id)
 	progression.add_experience(3 * amount, "scavenging")
@@ -234,6 +299,8 @@ func _on_player_died() -> void:
 	player.set_physics_process(false)
 
 func _trigger_world_event() -> void:
+	if not ZOMBIES_ENABLED:
+		return
 	var active_zombies := get_tree().get_nodes_in_group("zombies").size()
 	if active_zombies >= 8:
 		return

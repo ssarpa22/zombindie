@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_im2ph"]
+albedo_color = Color(0.27, 0.19, 0.12, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s6vb"]
+size = Vector3(0.8, 0.75, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t1y5p"]
+size = Vector3(0.8, 0.75, 0.8)
+
+[node name="033_Wooden_Crate" type="StaticBody3D" unique_id=1889690138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1088880432]
+material_override = SubResource("StandardMaterial3D_im2ph")
+mesh = SubResource("BoxMesh_6s6vb")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1947319461]
+shape = SubResource("BoxShape3D_t1y5p")

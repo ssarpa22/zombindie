@@ -1,0 +1,52 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
+
+[node name="RoadNetwork" type="Node3D" parent="."]
+asset_key = "road_network"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Warning_Sign.tscn" id="warning"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_Directional.tscn" id="directional"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_RoadSign.tscn" id="roadsign"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_TrafficCone.tscn" id="cone"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Abandoned_Vehicle_Car.tscn" id="car"]
+
+[node name="RoadNetwork" type="Node3D"]
+
+[node name="Lamp_ApproachWest" parent="." instance=ExtResource("lamp")]
+position = Vector3(-1, 0, 35)
+
+[node name="Warning_ApproachEast" parent="." instance=ExtResource("warning")]
+position = Vector3(16, 0, 35)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="Lamp_RuralWest" parent="." instance=ExtResource("lamp")]
+position = Vector3(5, 0, 85)
+
+[node name="DirectionalSign_RuralEast" parent="." instance=ExtResource("directional")]
+position = Vector3(22, 0, 86)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="RoadSign_SouthWest" parent="." instance=ExtResource("roadsign")]
+position = Vector3(1, 0, 125)
+
+[node name="Warning_SouthEast" parent="." instance=ExtResource("warning")]
+position = Vector3(19, 0, 126)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="Lamp_StationWest" parent="." instance=ExtResource("lamp")]
+position = Vector3(-5, 0, 175)
+
+[node name="DirectionalSign_StationEast" parent="." instance=ExtResource("directional")]
+position = Vector3(13, 0, 176)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="AbandonedCar_Shoulder" parent="." instance=ExtResource("car")]
+position = Vector3(25, 0, 108)
+rotation = Vector3(0, 1.48, 0)
+
+[node name="Cone_AbandonedCar" parent="." instance=ExtResource("cone")]
+position = Vector3(21, 0, 104)

@@ -1,0 +1,58 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
+
+[node name="HospitalGrounds" type="Node3D" parent="."]
+asset_key = "hospital_grounds"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Abandoned_Vehicle_Car.tscn" id="car"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_ConstructionBarrier.tscn" id="barrier"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Dumpster.tscn" id="dumpster"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Sign_Directional.tscn" id="sign"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fire_Extinguisher.tscn" id="extinguisher"]
+
+[sub_resource type="BoxMesh" id="HospitalWalkwayMesh"]
+size = Vector3(3.4, 0.06, 10)
+
+[sub_resource type="BoxShape3D" id="HospitalWalkwayCollision"]
+size = Vector3(3.4, 0.06, 10)
+
+[sub_resource type="StandardMaterial3D" id="HospitalWalkwayMaterial"]
+albedo_color = Color(0.26, 0.27, 0.24, 1)
+roughness = 0.95
+
+[node name="HospitalGrounds" type="Node3D"]
+
+[node name="EmergencyWalkway" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.035, 17)
+
+[node name="WalkwaySurface" type="MeshInstance3D" parent="EmergencyWalkway"]
+mesh = SubResource("HospitalWalkwayMesh")
+material_override = SubResource("HospitalWalkwayMaterial")
+
+[node name="WalkwayCollision" type="CollisionShape3D" parent="EmergencyWalkway"]
+shape = SubResource("HospitalWalkwayCollision")
+
+[node name="AbandonedAmbulance" parent="." instance=ExtResource("car")]
+position = Vector3(17, 0, 24)
+rotation = Vector3(0, 3.141593, 0)
+
+[node name="ServiceDumpster" parent="." instance=ExtResource("dumpster")]
+position = Vector3(-14, 0, -9)
+
+[node name="EmergencyBarrier" parent="." instance=ExtResource("barrier")]
+position = Vector3(7, 0, 22)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="NightApproachLamp" parent="." instance=ExtResource("lamp")]
+position = Vector3(11, 0, 19)
+
+[node name="HospitalDirectionalSign" parent="." instance=ExtResource("sign")]
+position = Vector3(12, 0, 13)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="WallFireExtinguisher" parent="." instance=ExtResource("extinguisher")]
+position = Vector3(-10, 0, 9)

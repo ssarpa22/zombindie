@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43prx"]
+albedo_color = Color(0.28, 0.31, 0.28, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_q3jn0"]
+size = Vector3(0.9, 0.7, 0.42)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pvo0f"]
+size = Vector3(0.9, 0.7, 0.42)
+
+[node name="039_Air_Conditioner_Outdoor" type="StaticBody3D" unique_id=648908180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1500248180]
+material_override = SubResource("StandardMaterial3D_43prx")
+mesh = SubResource("BoxMesh_q3jn0")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=569116474]
+shape = SubResource("BoxShape3D_pvo0f")

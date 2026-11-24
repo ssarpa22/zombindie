@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/door_garage_roller.gd" id="1_door_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="DoorBody" type="StaticBody3D"]
-script = ExtResource("1_door_script")
+[node name="Door_GarageRoller" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Door_GarageRoller"

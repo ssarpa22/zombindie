@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/abandoned_vehicle_car.gd" id="1_prop_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="PropBody" type="StaticBody3D"]
-script = ExtResource("1_prop_script")
+[node name="Abandoned_Vehicle_Car" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Abandoned_Vehicle_Car"

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://mboqq4daxfwn"]
+
+[node name="WorldLayout" type="Node3D" unique_id=1939407833]
+
+[node name="Roads" type="Node3D" parent="." unique_id=774141071]
+
+[node name="NorthHighway" type="Node3D" parent="Roads" unique_id=892644635]
+
+[node name="01_PoliceStation" type="Marker3D" parent="Roads/NorthHighway" unique_id=204684809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, 220)
+
+[node name="02_ForestJunction" type="Marker3D" parent="Roads/NorthHighway" unique_id=1865544915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 430)
+
+[node name="03_NorthCrossing" type="Marker3D" parent="Roads/NorthHighway" unique_id=1647018785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 210, 0, 690)
+
+[node name="04_NorthRural" type="Marker3D" parent="Roads/NorthHighway" unique_id=840184175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330, 0, 1040)
+
+[node name="05_CityApproach" type="Marker3D" parent="Roads/NorthHighway" unique_id=1797942120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 560, 0, 1450)
+
+[node name="06_IndustrialCity" type="Marker3D" parent="Roads/NorthHighway" unique_id=930265974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 620, 0, 1810)
+
+[node name="WestRuralRoad" type="Node3D" parent="Roads" unique_id=1322861899]
+
+[node name="01_PoliceStation" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=147743151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, 220)
+
+[node name="02_FarmTurnoff" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=268110581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 0, 330)
+
+[node name="03_RangerShelter" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=2004623124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -390, 0, 620)
+
+[node name="04_CreekBridge" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=1761557324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -620, 0, 920)
+
+[node name="05_PumpingStation" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=1105253250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -960, 0, 1190)
+
+[node name="06_GhostTown" type="Marker3D" parent="Roads/WestRuralRoad" unique_id=1931963575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1340, 0, 1480)
+
+[node name="SouthHighway" type="Node3D" parent="Roads" unique_id=668548240]
+
+[node name="01_PoliceStation" type="Marker3D" parent="Roads/SouthHighway" unique_id=1114892526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, 220)
+
+[node name="02_ClinicJunction" type="Marker3D" parent="Roads/SouthHighway" unique_id=1920480028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, -160)
+
+[node name="03_SouthWoodland" type="Marker3D" parent="Roads/SouthHighway" unique_id=126098367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270, 0, -460)
+
+[node name="04_Sanatorium" type="Marker3D" parent="Roads/SouthHighway" unique_id=1021314379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -430, 0, -820)
+
+[node name="05_SouthTown" type="Marker3D" parent="Roads/SouthHighway" unique_id=953052493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 0, -1180)
+
+[node name="06_HighwayTerminal" type="Marker3D" parent="Roads/SouthHighway" unique_id=20889469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 220, 0, -1460)
+
+[node name="Locations" type="Node3D" parent="." unique_id=1221302301]
+
+[node name="GhostTown_LasAnimas" type="Marker3D" parent="Locations" unique_id=1917212692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1340, 0, 1480)
+
+[node name="IndustrialDistrict" type="Marker3D" parent="Locations" unique_id=2037329523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 620, 0, 1810)
+
+[node name="SouthHighwayTerminal" type="Marker3D" parent="Locations" unique_id=1256196302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 220, 0, -1460)
+
+[node name="Sanatorium" type="Marker3D" parent="Locations" unique_id=1409746486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -430, 0, -820)
+
+[node name="RangerShelter" type="Marker3D" parent="Locations" unique_id=1286460432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -390, 0, 620)
+
+[node name="SewerAccess" type="Marker3D" parent="Locations" unique_id=1796959037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 0, 515)
+
+[node name="CreekBridge" type="Marker3D" parent="Locations" unique_id=321262522]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -370, 0, -635)

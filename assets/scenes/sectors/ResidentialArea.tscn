@@ -1,0 +1,51 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
+
+[node name="ResidentialArea" type="Node3D" parent="."]
+asset_key = "residential_area"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_Cottage.tscn" id="cottage"]
+[ext_resource type="PackedScene" path="res://assets/scenes/buildings/Building_SmallHome.tscn" id="home"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Mailbox.tscn" id="mailbox"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_ChainLink.tscn" id="fence"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://assets/scenes/forest/Tree_PineVariant.tscn" id="pine"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Bench.tscn" id="bench"]
+
+[node name="ResidentialArea" type="Node3D"]
+
+[node name="Farmhouse_West" parent="." instance=ExtResource("cottage")]
+position = Vector3(-34, 0, -18)
+rotation = Vector3(0, 0.6, 0)
+
+[node name="SmallHome_East" parent="." instance=ExtResource("home")]
+position = Vector3(34, 0, 18)
+rotation = Vector3(0, -0.5, 0)
+
+[node name="Cottage_North" parent="." instance=ExtResource("cottage")]
+position = Vector3(-22, 0, 43)
+rotation = Vector3(0, 2.8, 0)
+
+[node name="Mailbox_West" parent="." instance=ExtResource("mailbox")]
+position = Vector3(-30, 0, -11)
+
+[node name="Mailbox_East" parent="." instance=ExtResource("mailbox")]
+position = Vector3(30, 0, 13)
+
+[node name="WestPropertyFence" parent="." instance=ExtResource("fence")]
+position = Vector3(-45, 0, -18)
+
+[node name="EastPropertyFence" parent="." instance=ExtResource("fence")]
+position = Vector3(45, 0, 18)
+
+[node name="ResidentialLamp" parent="." instance=ExtResource("lamp")]
+position = Vector3(20, 0, 10)
+
+[node name="PineNorthwest" parent="." instance=ExtResource("pine")]
+position = Vector3(-47, 0, 44)
+
+[node name="BenchByDrive" parent="." instance=ExtResource("bench")]
+position = Vector3(31, 0, 24)

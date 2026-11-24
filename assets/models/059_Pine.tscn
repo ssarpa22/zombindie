@@ -1,0 +1,90 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_im2ph"]
+albedo_color = Color(0.27, 0.19, 0.12, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_3aujj"]
+size = Vector3(0.7, 8, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dlmht"]
+size = Vector3(0.7, 8, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfot1"]
+albedo_color = Color(0.15, 0.11, 0.08, 1)
+roughness = 0.94
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_npvei"]
+top_radius = 0.32
+bottom_radius = 0.32
+height = 7.2
+radial_segments = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lb1gf"]
+albedo_color = Color(0.055, 0.12, 0.075, 1)
+roughness = 0.94
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_q0n0p"]
+top_radius = 0.0
+bottom_radius = 2.2
+height = 3.0
+radial_segments = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rccqo"]
+albedo_color = Color(0.12, 0.2, 0.11, 1)
+roughness = 0.94
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0r8xc"]
+top_radius = 0.0
+bottom_radius = 1.82
+height = 3.0
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_p53hf"]
+top_radius = 0.0
+bottom_radius = 1.44
+height = 3.0
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xkr3k"]
+top_radius = 0.0
+bottom_radius = 1.06
+height = 3.0
+radial_segments = 6
+
+[node name="049_Pine_Tree_LowPoly" type="StaticBody3D" unique_id=2017981855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 108)
+metadata/asset_category = "05_Forest_And_Nature"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=383520622]
+material_override = SubResource("StandardMaterial3D_im2ph")
+mesh = SubResource("BoxMesh_3aujj")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=416005259]
+shape = SubResource("BoxShape3D_dlmht")
+
+[node name="Trunk" type="MeshInstance3D" parent="." unique_id=1636939490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("CylinderMesh_npvei")
+
+[node name="Canopy_Tier_00" type="MeshInstance3D" parent="." unique_id=1641478269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
+material_override = SubResource("StandardMaterial3D_lb1gf")
+mesh = SubResource("CylinderMesh_q0n0p")
+
+[node name="Canopy_Tier_01" type="MeshInstance3D" parent="." unique_id=714681885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.55, 0)
+material_override = SubResource("StandardMaterial3D_rccqo")
+mesh = SubResource("CylinderMesh_0r8xc")
+
+[node name="Canopy_Tier_02" type="MeshInstance3D" parent="." unique_id=2014726045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9, 0)
+material_override = SubResource("StandardMaterial3D_lb1gf")
+mesh = SubResource("CylinderMesh_p53hf")
+
+[node name="Canopy_Tier_03" type="MeshInstance3D" parent="." unique_id=944957216]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.25, 0)
+material_override = SubResource("StandardMaterial3D_rccqo")
+mesh = SubResource("CylinderMesh_xkr3k")

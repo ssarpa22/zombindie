@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfot1"]
+albedo_color = Color(0.15, 0.11, 0.08, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_s263e"]
+size = Vector3(0.48, 5.2, 0.48)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x8q76"]
+size = Vector3(0.48, 5.2, 0.48)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jusif"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 5.2
+radial_segments = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_im2ph"]
+albedo_color = Color(0.27, 0.19, 0.12, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_mpnal"]
+size = Vector3(1.2, 0.16, 0.16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k4x43"]
+size = Vector3(0.9, 0.14, 0.14)
+
+[node name="050_Dead_Tree_Snag" type="StaticBody3D" unique_id=1313831520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 108)
+metadata/asset_category = "05_Forest_And_Nature"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=25294542]
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_s263e")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1419105625]
+shape = SubResource("BoxShape3D_x8q76")
+
+[node name="Trunk" type="MeshInstance3D" parent="." unique_id=1194755179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("CylinderMesh_jusif")
+
+[node name="Broken_Branch_A" type="MeshInstance3D" parent="." unique_id=533005003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48, 3.1, 0)
+material_override = SubResource("StandardMaterial3D_im2ph")
+mesh = SubResource("BoxMesh_mpnal")
+
+[node name="Broken_Branch_B" type="MeshInstance3D" parent="." unique_id=1531857653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36, 4, 0)
+material_override = SubResource("StandardMaterial3D_im2ph")
+mesh = SubResource("BoxMesh_k4x43")

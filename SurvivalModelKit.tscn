@@ -1,0 +1,127 @@
+[gd_scene load_steps=9 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Concrete"]
+albedo_color = Color(0.29, 0.31, 0.29, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Metal"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.45
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="Fabric"]
+albedo_color = Color(0.42, 0.43, 0.37, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Wood"]
+albedo_color = Color(0.24, 0.18, 0.12, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="Box"]
+
+[sub_resource type="CylinderMesh" id="Cylinder"]
+radial_segments = 8
+
+[node name="SurvivalModelKit" type="Node3D"]
+
+[node name="HospitalBed" type="Node3D" parent="."]
+position = Vector3(-6, 0, 0)
+
+[node name="Frame" type="MeshInstance3D" parent="HospitalBed"]
+position = Vector3(0, 0.48, 0)
+mesh = SubResource("Box")
+scale = Vector3(1.18, 0.12, 2.12)
+material_override = SubResource("Metal")
+
+[node name="Mattress" type="MeshInstance3D" parent="HospitalBed"]
+position = Vector3(0, 0.64, 0)
+mesh = SubResource("Box")
+scale = Vector3(1.08, 0.2, 1.94)
+material_override = SubResource("Fabric")
+
+[node name="Pillow" type="MeshInstance3D" parent="HospitalBed"]
+position = Vector3(0, 0.78, -0.76)
+mesh = SubResource("Box")
+scale = Vector3(0.66, 0.12, 0.38)
+material_override = SubResource("Fabric")
+
+[node name="Headboard" type="MeshInstance3D" parent="HospitalBed"]
+position = Vector3(0, 0.72, -1.04)
+mesh = SubResource("Box")
+scale = Vector3(1.22, 0.48, 0.08)
+material_override = SubResource("Metal")
+
+[node name="ClinicReceptionDesk" type="Node3D" parent="."]
+position = Vector3(-2, 0, 0)
+
+[node name="Counter" type="MeshInstance3D" parent="ClinicReceptionDesk"]
+position = Vector3(0, 0.52, 0)
+mesh = SubResource("Box")
+scale = Vector3(2.8, 0.95, 0.88)
+material_override = SubResource("Wood")
+
+[node name="Top" type="MeshInstance3D" parent="ClinicReceptionDesk"]
+position = Vector3(0, 1.02, 0)
+mesh = SubResource("Box")
+scale = Vector3(2.96, 0.12, 1.0)
+material_override = SubResource("Concrete")
+
+[node name="MedicalStorageCabinet" type="Node3D" parent="."]
+position = Vector3(2, 0, 0)
+
+[node name="Body" type="MeshInstance3D" parent="MedicalStorageCabinet"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("Box")
+scale = Vector3(0.95, 1.85, 0.56)
+material_override = SubResource("Concrete")
+
+[node name="Door" type="MeshInstance3D" parent="MedicalStorageCabinet"]
+position = Vector3(0, 0.95, -0.3)
+mesh = SubResource("Box")
+scale = Vector3(0.86, 1.68, 0.08)
+material_override = SubResource("Metal")
+
+[node name="RoadBarrier" type="Node3D" parent="."]
+position = Vector3(6, 0, 0)
+
+[node name="ConcreteBlock" type="MeshInstance3D" parent="RoadBarrier"]
+position = Vector3(0, 0.36, 0)
+mesh = SubResource("Box")
+scale = Vector3(2.4, 0.72, 0.62)
+material_override = SubResource("Concrete")
+
+[node name="WarningStripe" type="MeshInstance3D" parent="RoadBarrier"]
+position = Vector3(0, 0.59, -0.32)
+mesh = SubResource("Box")
+scale = Vector3(1.75, 0.12, 0.05)
+material_override = SubResource("Wood")
+
+[node name="SewerManhole" type="Node3D" parent="."]
+position = Vector3(-4, 0, 4)
+
+[node name="Frame" type="MeshInstance3D" parent="SewerManhole"]
+position = Vector3(0, 0.05, 0)
+mesh = SubResource("Cylinder")
+scale = Vector3(1.28, 0.1, 1.28)
+material_override = SubResource("Concrete")
+
+[node name="Cover" type="MeshInstance3D" parent="SewerManhole"]
+position = Vector3(0, 0.12, 0)
+mesh = SubResource("Cylinder")
+scale = Vector3(1.04, 0.09, 1.04)
+material_override = SubResource("Metal")
+
+[node name="StreetLamp" type="Node3D" parent="."]
+position = Vector3(0, 0, 7)
+
+[node name="Pole" type="MeshInstance3D" parent="StreetLamp"]
+position = Vector3(0, 2.1, 0)
+mesh = SubResource("Cylinder")
+scale = Vector3(0.1, 2.1, 0.1)
+material_override = SubResource("Metal")
+
+[node name="Arm" type="MeshInstance3D" parent="StreetLamp"]
+position = Vector3(0.38, 4.08, 0)
+mesh = SubResource("Box")
+scale = Vector3(0.64, 0.12, 0.2)
+material_override = SubResource("Metal")

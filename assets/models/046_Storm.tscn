@@ -1,0 +1,84 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_klqub"]
+size = Vector3(1.6, 0.12, 0.62)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_scpcc"]
+size = Vector3(1.6, 0.12, 0.62)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jlyvm"]
+albedo_color = Color(0.19, 0.21, 0.2, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_fmu25"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ayaf7"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bri6w"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jutju"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6f1be"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wnh8y"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xielp"]
+size = Vector3(0.055, 0.14, 0.72)
+
+[node name="046_Storm_Drain_Grate" type="StaticBody3D" unique_id=1989729589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 90)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=770996045]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_klqub")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=213060392]
+shape = SubResource("BoxShape3D_scpcc")
+
+[node name="Slot_00" type="MeshInstance3D" parent="." unique_id=1292797958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_fmu25")
+
+[node name="Slot_01" type="MeshInstance3D" parent="." unique_id=2137762144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_ayaf7")
+
+[node name="Slot_02" type="MeshInstance3D" parent="." unique_id=1136278533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_bri6w")
+
+[node name="Slot_03" type="MeshInstance3D" parent="." unique_id=846689165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_jutju")
+
+[node name="Slot_04" type="MeshInstance3D" parent="." unique_id=589744891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_6f1be")
+
+[node name="Slot_05" type="MeshInstance3D" parent="." unique_id=1200301774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_wnh8y")
+
+[node name="Slot_06" type="MeshInstance3D" parent="." unique_id=924698800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62, 0.08, 0)
+material_override = SubResource("StandardMaterial3D_jlyvm")
+mesh = SubResource("BoxMesh_xielp")

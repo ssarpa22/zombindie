@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1uml"]
+albedo_color = Color(0.31, 0.32, 0.3, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_dc3eg"]
+size = Vector3(4, 2.8, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hvjpl"]
+size = Vector3(0.16, 2.95, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tqkcp"]
+size = Vector3(0.16, 2.95, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dai67"]
+size = Vector3(0.16, 2.95, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4p6lt"]
+size = Vector3(3.9, 2.8, 0.16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0or51"]
+size = Vector3(4, 2.8, 0.22)
+
+[node name="021_Concrete_Perimeter_Wall" type="StaticBody3D" unique_id=394811641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 36)
+metadata/asset_category = "01_Roads_And_Fences"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=600172007]
+material_override = SubResource("StandardMaterial3D_p1uml")
+mesh = SubResource("BoxMesh_dc3eg")
+
+[node name="Post_-2_0" type="MeshInstance3D" parent="." unique_id=907548398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.4, 0)
+material_override = SubResource("StandardMaterial3D_p1uml")
+mesh = SubResource("BoxMesh_hvjpl")
+
+[node name="Post_0_0" type="MeshInstance3D" parent="." unique_id=495130525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+material_override = SubResource("StandardMaterial3D_p1uml")
+mesh = SubResource("BoxMesh_tqkcp")
+
+[node name="Post_2_0" type="MeshInstance3D" parent="." unique_id=2019002465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.4, 0)
+material_override = SubResource("StandardMaterial3D_p1uml")
+mesh = SubResource("BoxMesh_dai67")
+
+[node name="Wall_Panel" type="MeshInstance3D" parent="." unique_id=232087745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+material_override = SubResource("StandardMaterial3D_p1uml")
+mesh = SubResource("BoxMesh_4p6lt")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=786563688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("BoxShape3D_0or51")

@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfot1"]
+albedo_color = Color(0.15, 0.11, 0.08, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_i0hgd"]
+size = Vector3(1.2, 0.16, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ken7y"]
+size = Vector3(1.2, 0.16, 1)
+
+[node name="034_Pallet" type="StaticBody3D" unique_id=1534622828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=407684312]
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_i0hgd")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=456399503]
+shape = SubResource("BoxShape3D_ken7y")

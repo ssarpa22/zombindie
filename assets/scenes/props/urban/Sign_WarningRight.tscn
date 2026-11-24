@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/sign_warning_right.gd" id="1_prop_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="PropBody" type="StaticBody3D"]
-script = ExtResource("1_prop_script")
+[node name="Sign_WarningRight" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Sign_WarningRight"

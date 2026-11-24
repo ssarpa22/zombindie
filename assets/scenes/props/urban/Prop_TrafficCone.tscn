@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/prop_traffic_cone.gd" id="1_prop_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="PropBody" type="StaticBody3D"]
-script = ExtResource("1_prop_script")
+[node name="Prop_TrafficCone" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Prop_TrafficCone"

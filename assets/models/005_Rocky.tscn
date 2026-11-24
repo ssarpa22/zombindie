@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06hg0"]
+albedo_color = Color(0.34, 0.34, 0.3, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_4smm8"]
+size = Vector3(8, 0.12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7shj"]
+size = Vector3(8, 0.12, 8)
+
+[node name="005_Rocky_Ground_Tile" type="StaticBody3D" unique_id=1255174430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 0)
+metadata/asset_category = "00_Terrain"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1355548074]
+material_override = SubResource("StandardMaterial3D_06hg0")
+mesh = SubResource("BoxMesh_4smm8")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1028083525]
+shape = SubResource("BoxShape3D_o7shj")

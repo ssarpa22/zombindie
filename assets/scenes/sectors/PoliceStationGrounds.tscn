@@ -1,0 +1,64 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
+
+[node name="PoliceStationGrounds" type="Node3D" parent="."]
+asset_key = "police_station_grounds"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Fence_ChainLink.tscn" id="fence"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Gate_Single.tscn" id="gate"]
+[ext_resource type="PackedScene" path="res://assets/scenes/industrial/Industrial_Generator.tscn" id="generator"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_StreetLamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_RoadSign.tscn" id="sign"]
+[ext_resource type="PackedScene" path="res://assets/scenes/props/urban/Prop_Bench.tscn" id="bench"]
+
+[node name="PoliceStationGrounds" type="Node3D"]
+
+[node name="WestFenceFront" parent="." instance=ExtResource("fence")]
+position = Vector3(-16, 0, 221)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="WestFenceMiddle" parent="." instance=ExtResource("fence")]
+position = Vector3(-16, 0, 226)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="WestFenceRear" parent="." instance=ExtResource("fence")]
+position = Vector3(-16, 0, 231)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="EastFenceFront" parent="." instance=ExtResource("fence")]
+position = Vector3(18, 0, 221)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="EastFenceMiddle" parent="." instance=ExtResource("fence")]
+position = Vector3(18, 0, 226)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="EastFenceRear" parent="." instance=ExtResource("fence")]
+position = Vector3(18, 0, 231)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="RearFenceWest" parent="." instance=ExtResource("fence")]
+position = Vector3(-11, 0, 244)
+
+[node name="RearGate" parent="." instance=ExtResource("gate")]
+position = Vector3(0, 0, 244)
+
+[node name="RearFenceEast" parent="." instance=ExtResource("fence")]
+position = Vector3(11, 0, 244)
+
+[node name="BackupGenerator" parent="." instance=ExtResource("generator")]
+position = Vector3(-13, 0, 241)
+rotation = Vector3(0, 1.570796, 0)
+
+[node name="YardLamp" parent="." instance=ExtResource("lamp")]
+position = Vector3(14, 0, 241)
+
+[node name="PatrolBench" parent="." instance=ExtResource("bench")]
+position = Vector3(15, 0, 235)
+
+[node name="RoadsideSign" parent="." instance=ExtResource("sign")]
+position = Vector3(17, 0, 211)
+rotation = Vector3(0, 1.570796, 0)

@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k1a4x"]
+albedo_color = Color(0.34, 0.08, 0.055, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_gf7mj"]
+size = Vector3(0.6, 1.65, 0.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oxpye"]
+size = Vector3(0.6, 1.65, 0.55)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5jfpx"]
+albedo_color = Color(0.58, 0.57, 0.49, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_8oucs"]
+size = Vector3(0.34, 0.24, 0.025)
+
+[node name="041_Fuel_Pump" type="StaticBody3D" unique_id=1015653060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 90)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=262267677]
+material_override = SubResource("StandardMaterial3D_k1a4x")
+mesh = SubResource("BoxMesh_gf7mj")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1419896303]
+shape = SubResource("BoxShape3D_oxpye")
+
+[node name="Display" type="MeshInstance3D" parent="." unique_id=1282069074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, -0.29)
+material_override = SubResource("StandardMaterial3D_5jfpx")
+mesh = SubResource("BoxMesh_8oucs")

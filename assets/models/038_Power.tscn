@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_jrgaa"]
+size = Vector3(1.1, 1, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jhxyk"]
+size = Vector3(1.1, 1, 0.9)
+
+[node name="038_Power_Transformer" type="StaticBody3D" unique_id=17218678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1294985391]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_jrgaa")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=718893094]
+shape = SubResource("BoxShape3D_jhxyk")

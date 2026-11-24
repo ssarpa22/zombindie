@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://assets/scripts/building_coliseum.gd" id="1_building_script]
+[ext_resource type="Script" path="res://assets/scripts/asset_model_builder.gd" id="1_builder"]
 
-[node name="BuildingRoot" type="StaticBody3D"]
-script = ExtResource("1_building_script")
+[node name="Building_Coliseum" type="StaticBody3D"]
+script = ExtResource("1_builder")
+asset_key = "Building_Coliseum"

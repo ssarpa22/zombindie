@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuqk5"]
+albedo_color = Color(0.16, 0.19, 0.19, 1)
+metallic = 0.35
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_6pff6"]
+size = Vector3(1.8, 1.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rlmep"]
+size = Vector3(1.8, 1.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtubb"]
+albedo_color = Color(0.39, 0.43, 0.38, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_u5mbg"]
+size = Vector3(0.75, 0.38, 0.04)
+
+[node name="040_Generator_Industrial" type="StaticBody3D" unique_id=468643834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126, 0, 72)
+metadata/asset_category = "03_Hospital_And_Interior"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=581638116]
+material_override = SubResource("StandardMaterial3D_nuqk5")
+mesh = SubResource("BoxMesh_6pff6")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=321388417]
+shape = SubResource("BoxShape3D_rlmep")
+
+[node name="Control_Panel" type="MeshInstance3D" parent="." unique_id=1472680885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24, -0.52)
+material_override = SubResource("StandardMaterial3D_xtubb")
+mesh = SubResource("BoxMesh_u5mbg")

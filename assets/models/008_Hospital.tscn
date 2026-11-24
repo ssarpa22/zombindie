@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5jfpx"]
+albedo_color = Color(0.58, 0.57, 0.49, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_ij24s"]
+size = Vector3(8, 0.12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2kbte"]
+size = Vector3(8, 0.12, 8)
+
+[node name="008_Hospital_Floor_Tile" type="StaticBody3D" unique_id=870413934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126, 0, 0)
+metadata/asset_category = "00_Terrain"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=633030976]
+material_override = SubResource("StandardMaterial3D_5jfpx")
+mesh = SubResource("BoxMesh_ij24s")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1592196988]
+shape = SubResource("BoxShape3D_2kbte")

@@ -34,13 +34,6 @@ func _ready() -> void:
 	shape.shape = box_shape
 	shape.position.y = 0.5
 	add_child(shape)
-	var label := Label3D.new()
-	label.text = "%s  ·  E" % ItemCatalog.display_name(item_id)
-	label.position.y = 1.12
-	label.font_size = 18
-	label.pixel_size = 0.004
-	label.modulate = Color(0.75, 0.8, 0.72, 0.8)
-	add_child(label)
 
 func _process(delta: float) -> void:
 	_bob_time += delta

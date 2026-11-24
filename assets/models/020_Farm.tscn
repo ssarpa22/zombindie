@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfot1"]
+albedo_color = Color(0.15, 0.11, 0.08, 1)
+roughness = 0.94
+
+[sub_resource type="BoxMesh" id="BoxMesh_ngmie"]
+size = Vector3(4, 2.5, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xgeio"]
+size = Vector3(0.16, 2.65, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cv8pm"]
+size = Vector3(0.16, 2.65, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y0yhc"]
+size = Vector3(0.16, 2.65, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f45yu"]
+size = Vector3(4.1, 0.12, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ko7k8"]
+size = Vector3(4.1, 0.12, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_64y4a"]
+size = Vector3(4.1, 0.12, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o0xin"]
+size = Vector3(4, 2.5, 0.22)
+
+[node name="020_Farm_Rail_Fence" type="StaticBody3D" unique_id=1904132445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 36)
+metadata/asset_category = "01_Roads_And_Fences"
+metadata/editable_asset = true
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=2047551197]
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_ngmie")
+
+[node name="Post_-2_0" type="MeshInstance3D" parent="." unique_id=1857538116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.25, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_xgeio")
+
+[node name="Post_0_0" type="MeshInstance3D" parent="." unique_id=2034541166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_cv8pm")
+
+[node name="Post_2_0" type="MeshInstance3D" parent="." unique_id=279954126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.25, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_y0yhc")
+
+[node name="Rail_0_24" type="MeshInstance3D" parent="." unique_id=1283037344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_f45yu")
+
+[node name="Rail_0_52" type="MeshInstance3D" parent="." unique_id=390743539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_ko7k8")
+
+[node name="Rail_0_8" type="MeshInstance3D" parent="." unique_id=1670241906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = SubResource("StandardMaterial3D_wfot1")
+mesh = SubResource("BoxMesh_64y4a")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=389846461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_o0xin")

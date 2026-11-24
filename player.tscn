@@ -1,32 +1,29 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://nq0h7k3760ec"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://dn7s6bdvohghe" path="res://player.gd" id="1_player"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape_player"]
 radius = 0.32
 height = 1.7
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=1556058531]
 floor_snap_length = 0.2
 script = ExtResource("1_player")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-position = Vector3(0, 0.85, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=994154388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("CapsuleShape_player")
 
-[node name="CameraPivot" type="Node3D" parent="."]
-position = Vector3(0, 1.55, 0)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1441938622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1932052435]
 current = true
 fov = 78.0
 
-[node name="Flashlight" type="SpotLight3D" parent="CameraPivot/Camera3D"]
-position = Vector3(0, 0, -0.15)
-rotation = Vector3(-0.12, 0, 0)
+[node name="Flashlight" type="SpotLight3D" parent="CameraPivot/Camera3D" unique_id=1834200924]
+transform = Transform3D(1, 0, 0, 0, 0.99280864, 0.119712204, 0, -0.119712204, 0.99280864, 0, 0, -0.15)
 light_color = Color(0.82, 0.88, 0.8, 1)
 light_energy = 1.7
 spot_range = 14.0
 spot_angle = 32.0
-shadow_enabled = false
-
